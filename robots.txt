@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://arima-josanin.com/sitemap.xml
