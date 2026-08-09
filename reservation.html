@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ご予約 | ありま助産院</title>
+<meta name="description" content="ありま助産院のご予約ページ。WEB予約カレンダー・LINE・お電話から、産後ケア・母乳外来・育児相談などをご予約いただけます。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --rose:        #AF496E;
+  --rose-btn:    #B2537B;
+  --rose-deep:   #9C3F62;
+  --pink-label:  #C9758F;
+  --pink-card:   #F4D9E2;
+  --pink-note:   #F8DCE6;
+  --pink-number: #F3CDDA;
+  --hero-accent: #F3BCD1;
+  --bg:          #FDF8FB;
+  --bg-section:  #FBF0F4;
+  --ink:         #4C3440;
+  --ink-body:    #5F4551;
+  --ink-soft:    #A28490;
+  --divider:     #F2DDE5;
+  --footer-bg:   #38262F;
+  --header-h:    60px;
+}
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+html{ scroll-behavior:smooth; scroll-padding-top: calc(var(--header-h) + 12px); }
+body{
+  font-family:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",serif;
+  background:var(--bg);
+  color:var(--ink-body);
+  letter-spacing:.06em;
+  line-height:2;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  overflow-x:clip;
+}
+img{ max-width:100%; display:block; }
+a{ color:inherit; text-decoration:none; }
+
+/* ---------- ヘッダー ---------- */
+.site-header{
+  position:sticky; top:0; z-index:50;
+  height:var(--header-h);
+  background:linear-gradient(90deg,#FFFDFE 0%,#FBEBF1 100%);
+  border-bottom:1px solid rgba(175,73,110,.10);
+}
+.header-inner{
+  max-width:1080px; height:100%; margin:0 auto;
+  padding:0 24px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.brand{
+  font-size:17px; font-weight:600; letter-spacing:.3em;
+  color:var(--rose-btn);
+}
+.header-nav{ display:none; gap:30px; }
+.header-nav a{
+  font-size:13px; letter-spacing:.15em; color:#8A6674;
+  transition:color .25s;
+}
+.header-nav a:hover{ color:var(--rose); }
+.header-nav a[aria-current="page"]{ color:var(--rose); font-weight:600; }
+@media (min-width:820px){ .header-nav{ display:flex; } }
+
+/* ---------- ページヒーロー ---------- */
+.page-hero{
+  position:relative;
+  padding:88px 24px 92px;
+  text-align:center; color:#fff;
+  overflow:hidden;
+}
+.page-hero::before{
+  content:""; position:absolute; inset:0; z-index:-2;
+  background:
+    radial-gradient(110% 75% at 72% 18%, #ECC9C6 0%, rgba(236,201,198,0) 62%),
+    radial-gradient(95% 70% at 18% 85%, #D8A6A6 0%, rgba(216,166,166,0) 58%),
+    linear-gradient(160deg,#E6C0BD 0%,#D5A4A4 48%,#C18E95 100%);
+}
+.page-hero::after{
+  content:""; position:absolute; inset:0; z-index:-1;
+  background:rgba(76,42,52,.30);
+}
+.page-hero .sec-label{ color:var(--hero-accent); }
+.page-hero h1{
+  font-size:clamp(28px,7vw,42px);
+  font-weight:500; line-height:1.7; letter-spacing:.16em;
+  margin-bottom:22px;
+}
+.page-hero .hero-lead{
+  font-size:14.5px; line-height:2.3; letter-spacing:.1em;
+  color:rgba(255,255,255,.94);
+}
+
+/* ---------- 共通セクション ---------- */
+.section{ padding:88px 24px; }
+.container{ max-width:680px; margin:0 auto; }
+.sec-label{
+  font-size:12px; letter-spacing:.32em;
+  color:var(--pink-label);
+  margin-bottom:18px;
+}
+.sec-title{
+  font-size:clamp(26px,6.4vw,34px);
+  font-weight:600; line-height:1.75; letter-spacing:.12em;
+  color:var(--ink);
+  margin-bottom:26px;
+}
+.sec-sub{ font-size:14.5px; color:var(--ink-body); }
+
+.btn{
+  display:inline-block; border-radius:999px;
+  padding:15px 34px;
+  font-size:14.5px; letter-spacing:.14em; line-height:1.7;
+  border:0; cursor:pointer;
+  font-family:inherit;
+  transition:opacity .25s, background .25s, transform .25s;
+}
+.btn:hover{ transform:translateY(-1px); }
+.btn-solid{ background:var(--rose-btn); color:#fff; }
+.btn-solid:hover{ background:var(--rose-deep); }
+.btn-outline{
+  background:transparent; color:var(--rose-btn);
+  border:1px solid var(--rose-btn);
+}
+.btn-outline:hover{ background:rgba(178,83,123,.08); }
+
+.pill{
+  display:inline-flex; align-items:center; gap:8px;
+  background:var(--rose-btn); color:#fff;
+  border-radius:999px;
+  padding:11px 22px;
+  font-size:13.5px; letter-spacing:.08em; line-height:1.7;
+  transition:background .25s, transform .25s;
+}
+.pill:hover{ background:var(--rose-deep); transform:translateY(-1px); }
+
+/* ---------- 予約方法カード ---------- */
+.methods{
+  margin-top:48px;
+  display:grid; gap:20px;
+}
+.method-card{
+  display:block;
+  background:#fff;
+  border-radius:26px;
+  padding:34px 24px 36px;
+  text-align:center;
+  box-shadow:0 12px 34px rgba(175,73,110,.09);
+  transition:transform .25s, box-shadow .25s;
+}
+.method-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 16px 40px rgba(175,73,110,.16);
+}
+.method-card .m-emoji{ font-size:32px; display:block; margin-bottom:14px; }
+.method-card .m-title{
+  font-size:16px; font-weight:600; letter-spacing:.14em;
+  color:var(--ink);
+  margin-bottom:8px;
+}
+.method-card .m-text{
+  font-size:12.5px; line-height:1.9; letter-spacing:.06em;
+  color:var(--ink-soft);
+}
+@media (min-width:820px){
+  .methods{ grid-template-columns:repeat(3,1fr); }
+}
+
+/* ---------- WEB予約カレンダー ---------- */
+.booking{ background:var(--bg-section); }
+.booking-card{
+  margin-top:48px;
+  background:#fff;
+  border-radius:26px;
+  box-shadow:0 12px 34px rgba(175,73,110,.09);
+  overflow:hidden;
+}
+.booking-card iframe{ display:block; width:100%; height:660px; border:0; }
+.booking-empty{
+  padding:70px 28px;
+  display:flex; flex-direction:column; align-items:center; gap:14px;
+  text-align:center;
+}
+.booking-empty .b-emoji{ font-size:38px; line-height:1; }
+.booking-empty .b-title{ font-size:15px; letter-spacing:.1em; color:#B0517A; }
+.booking-empty .b-sub{ font-size:12.5px; line-height:2.1; color:var(--ink-soft); }
+.booking-alt{
+  margin-top:28px;
+  font-size:13.5px; line-height:2; letter-spacing:.06em;
+  color:var(--ink-soft);
+  text-align:center;
+}
+.booking-alt a{
+  color:#B0517A;
+  text-decoration:underline; text-underline-offset:4px;
+}
+@media (min-width:820px){
+  .booking .container{ max-width:820px; }
+}
+
+/* ---------- 予約フォーム ---------- */
+.form-card{
+  margin-top:48px;
+  background:#fff;
+  border-radius:26px;
+  box-shadow:0 12px 34px rgba(175,73,110,.09);
+  padding:40px 26px 44px;
+}
+@media (min-width:820px){
+  .form-card{ padding:52px 48px 56px; }
+}
+.form-group{ margin-bottom:34px; }
+.form-group:last-child{ margin-bottom:0; }
+.form-label{
+  display:flex; align-items:center; gap:10px;
+  font-size:14px; font-weight:600; letter-spacing:.12em;
+  color:var(--ink);
+  margin-bottom:14px;
+}
+.tag{
+  font-size:10.5px; font-weight:400; letter-spacing:.12em; line-height:1;
+  border-radius:999px;
+  padding:5px 10px;
+}
+.tag-req{ background:var(--rose-btn); color:#fff; }
+.tag-opt{ background:var(--pink-card); color:#A85E79; }
+
+.field{
+  width:100%;
+  font-family:inherit; font-size:15px; letter-spacing:.06em; line-height:1.8;
+  color:var(--ink-body);
+  background:var(--bg);
+  border:1px solid #EFD3DE;
+  border-radius:14px;
+  padding:13px 16px;
+  transition:border-color .25s, box-shadow .25s;
+  -webkit-appearance:none; appearance:none;
+}
+.field:focus{
+  outline:none;
+  border-color:var(--rose-btn);
+  box-shadow:0 0 0 3px rgba(178,83,123,.14);
+}
+textarea.field{ min-height:120px; resize:vertical; }
+select.field{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23B2537B' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 16px center;
+  padding-right:40px;
+}
+.field-row{ display:grid; gap:14px; }
+@media (min-width:600px){
+  .field-row{ grid-template-columns:1.2fr 1fr; }
+}
+.field-hint{
+  margin-top:10px;
+  font-size:12px; line-height:1.9; letter-spacing:.06em;
+  color:var(--ink-soft);
+}
+.field-error{
+  display:none;
+  margin-top:10px;
+  font-size:12.5px; letter-spacing:.06em;
+  color:#C13B3B;
+}
+.field-error.show{ display:block; }
+
+/* メニュー選択チップ */
+.svc-choices{
+  display:grid; grid-template-columns:1fr; gap:12px;
+}
+@media (min-width:600px){
+  .svc-choices{ grid-template-columns:repeat(2,1fr); }
+}
+.chip{ position:relative; display:block; cursor:pointer; }
+.chip input{
+  position:absolute; opacity:0; width:1px; height:1px;
+}
+.chip-face{
+  display:flex; align-items:center; gap:10px;
+  background:var(--bg);
+  border:1px solid #EFD3DE;
+  border-radius:16px;
+  padding:14px 16px;
+  font-size:13.5px; letter-spacing:.08em; line-height:1.7;
+  color:var(--ink-body);
+  transition:background .25s, border-color .25s, color .25s;
+}
+.chip-face .c-emoji{ font-size:19px; flex:none; }
+.chip:hover .chip-face{ border-color:var(--rose-btn); }
+.chip input:checked + .chip-face{
+  background:var(--rose-btn);
+  border-color:var(--rose-btn);
+  color:#fff;
+}
+.chip input:focus-visible + .chip-face{
+  outline:2px solid var(--rose); outline-offset:3px;
+}
+
+/* 送信内容プレビュー */
+.preview-box{
+  background:var(--pink-note);
+  border-radius:16px;
+  padding:20px 22px;
+  font-size:13px; line-height:2; letter-spacing:.04em;
+  color:#8A4D65;
+  white-space:pre-wrap;
+  word-break:break-word;
+}
+.form-actions{
+  margin-top:36px;
+  display:flex; flex-direction:column; gap:14px;
+}
+.form-actions .btn{ width:100%; text-align:center; }
+@media (min-width:600px){
+  .form-actions{ flex-direction:row; }
+  .form-actions .btn{ width:auto; flex:1; }
+}
+.form-note{
+  margin-top:22px;
+  font-size:12px; line-height:2; letter-spacing:.06em;
+  color:var(--ink-soft);
+  text-align:center;
+}
+
+/* ---------- 予約の流れ ---------- */
+.flow-list{
+  margin-top:52px;
+  display:grid; gap:18px;
+}
+.flow-item{
+  display:grid; grid-template-columns:64px 1fr; gap:20px;
+  align-items:start;
+  background:#fff;
+  border-radius:22px;
+  padding:26px 24px;
+  box-shadow:0 10px 28px rgba(175,73,110,.07);
+}
+.flow-num{
+  font-size:40px; font-weight:400; line-height:1.3;
+  letter-spacing:.04em;
+  color:var(--pink-number);
+}
+.flow-item h3{
+  font-size:16px; font-weight:600; letter-spacing:.12em; line-height:1.8;
+  color:var(--ink);
+  margin-bottom:6px;
+}
+.flow-item p{ font-size:13.5px; line-height:2; }
+
+/* ---------- 注意事項 ---------- */
+.note-box{
+  margin-top:44px;
+  background:var(--pink-note);
+  border-radius:20px;
+  padding:28px 26px;
+}
+.note-box h3{
+  font-size:14.5px; font-weight:600; letter-spacing:.14em;
+  color:#B0517A;
+  margin-bottom:12px;
+}
+.note-box ul{ list-style:none; }
+.note-box li{
+  position:relative;
+  padding-left:20px;
+  font-size:13px; line-height:2.1; letter-spacing:.05em;
+  color:#8A4D65;
+}
+.note-box li::before{
+  content:"※"; position:absolute; left:0;
+}
+
+/* ---------- Contact ---------- */
+.contact{
+  background:var(--rose);
+  padding:100px 24px;
+  text-align:center;
+  color:#fff;
+}
+.contact .sec-label{ color:#F1BFD3; }
+.contact .sec-title{ color:#fff; }
+.contact .sec-sub{ color:#F6D9E4; }
+.contact-cards{
+  margin:56px auto 0;
+  max-width:440px;
+  display:grid; gap:24px;
+}
+.contact-card{
+  display:block;
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.30);
+  border-radius:26px;
+  padding:42px 24px;
+  transition:background .25s, transform .25s;
+}
+.contact-card:hover{ background:rgba(255,255,255,.22); transform:translateY(-2px); }
+.contact-card .c-emoji{ font-size:30px; display:block; margin-bottom:16px; }
+.contact-card .c-label{
+  font-size:13px; letter-spacing:.16em;
+  color:#F3CFDC;
+  margin-bottom:10px;
+}
+.contact-card .c-value{
+  font-size:21px; letter-spacing:.1em; line-height:1.7;
+  color:#fff;
+}
+@media (min-width:820px){
+  .contact-cards{ max-width:960px; grid-template-columns:repeat(3,1fr); }
+}
+
+/* ---------- フッター ---------- */
+.site-footer{
+  background:var(--footer-bg);
+  color:#C9AEB9;
+  text-align:center;
+  padding:64px 24px 52px;
+}
+.footer-brand{
+  font-size:19px; font-weight:500; letter-spacing:.3em;
+  color:#fff;
+  margin-bottom:30px;
+}
+.footer-nav{
+  display:flex; flex-wrap:wrap; justify-content:center;
+  column-gap:28px; row-gap:12px;
+  font-size:13px; letter-spacing:.1em;
+  max-width:520px; margin:0 auto;
+}
+.footer-nav a{ transition:color .25s; }
+.footer-nav a:hover{ color:#fff; }
+.copyright{
+  margin-top:34px;
+  font-size:12px; letter-spacing:.08em;
+  color:#8E7480;
+}
+
+/* ---------- スクロール表示アニメーション ---------- */
+.reveal{
+  opacity:0;
+  transform:translateY(30px);
+  transition:
+    opacity .9s ease,
+    transform .9s cubic-bezier(.22,.65,.3,1);
+  transition-delay:var(--d,0s);
+  will-change:opacity,transform;
+}
+.reveal.reveal-zoom{ transform:scale(.93) translateY(14px); }
+.reveal.in{ opacity:1; transform:none; }
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  .reveal{ opacity:1; transform:none; transition:none; }
+}
+a:focus-visible,.btn:focus-visible,.pill:focus-visible{
+  outline:2px solid var(--rose); outline-offset:3px; border-radius:6px;
+}
+</style>
+</head>
+<body id="top">
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">ありま助産院</a>
+    <nav class="header-nav" aria-label="メイン">
+      <a href="index.html#about">助産院について</a>
+      <a href="index.html#services">サービス</a>
+      <a href="index.html#access">アクセス</a>
+      <a href="reservation.html" aria-current="page">ご予約</a>
+      <a href="index.html#contact">お問い合わせ</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- ページタイトル -->
+  <section class="page-hero">
+    <p class="sec-label reveal" style="--d:.1s">Reservation</p>
+    <h1 class="reveal" style="--d:.25s">ご予約</h1>
+    <p class="hero-lead reveal" style="--d:.45s">WEB・LINE・お電話からご予約いただけます。<br>初めての方もお気軽にどうぞ。</p>
+  </section>
+
+  <!-- 予約方法 -->
+  <section class="section">
+    <div class="container">
+      <p class="sec-label reveal">How to Book</p>
+      <h2 class="sec-title reveal">ご予約方法</h2>
+      <p class="sec-sub reveal">ご都合のよい方法をお選びください。</p>
+
+      <div class="methods" data-stagger=".12">
+        <a class="method-card reveal" href="#calendar">
+          <span class="m-emoji">📅</span>
+          <p class="m-title">WEB予約</p>
+          <p class="m-text">空き状況を見ながら<br>24時間いつでも予約OK</p>
+        </a>
+        <a class="method-card reveal" href="#form">
+          <span class="m-emoji">💬</span>
+          <p class="m-title">LINE予約</p>
+          <p class="m-text">下のフォームに入力すると<br>LINEでそのまま送れます</p>
+        </a>
+        <!-- href の tel: に電話番号を入れてください -->
+        <a class="method-card reveal" href="tel:">
+          <span class="m-emoji">☎️</span>
+          <p class="m-title">お電話</p>
+          <p class="m-text">月〜土 9:00〜18:00<br>(日曜・祝日は休院)</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- WEB予約(Googleカレンダー 予約スケジュール埋め込み) -->
+  <section id="calendar" class="section booking">
+    <div class="container">
+      <p class="sec-label reveal">Web Reservation</p>
+      <h2 class="sec-title reveal">WEB予約カレンダー</h2>
+      <p class="sec-sub reveal">空き状況を確認しながら、24時間いつでもご予約いただけます。</p>
+
+      <!-- 予約カレンダーは下部scriptの BOOKING_URL を設定すると表示されます -->
+      <div class="booking-card reveal reveal-zoom" id="bookingCard">
+        <div class="booking-empty">
+          <span class="b-emoji">📅</span>
+          <span class="b-title">予約カレンダーをここに表示できます</span>
+          <span class="b-sub">Googleカレンダーの「予約スケジュール」の埋め込みURLを<br>ページ下部の BOOKING_URL に貼り付けると有効になります。</span>
+        </div>
+      </div>
+
+      <p class="booking-alt reveal">WEB予約がうまくいかない場合は、下の <a href="#form">LINE予約フォーム</a> または <a href="index.html#contact">お電話</a> でもご予約いただけます。</p>
+    </div>
+  </section>
+
+  <!-- LINE予約フォーム -->
+  <section id="form" class="section">
+    <div class="container">
+      <p class="sec-label reveal">LINE Reservation</p>
+      <h2 class="sec-title reveal">LINE予約フォーム</h2>
+      <p class="sec-sub reveal">ご希望の内容を入力すると、予約メッセージが自動で作成されます。<br>「LINEで送信」を押すと、LINEのトーク画面が開きます。</p>
+
+      <form class="form-card reveal reveal-zoom" id="resForm" novalidate>
+
+        <div class="form-group">
+          <p class="form-label" id="svcLabel">ご希望メニュー <span class="tag tag-req">必須</span></p>
+          <div class="svc-choices" role="radiogroup" aria-labelledby="svcLabel">
+            <label class="chip"><input type="radio" name="svc" value="産後ケア デイサービス"><span class="chip-face"><span class="c-emoji">🌸</span>産後ケア デイサービス</span></label>
+            <label class="chip"><input type="radio" name="svc" value="産後ケア 訪問"><span class="chip-face"><span class="c-emoji">👩‍⚕️</span>産後ケア 訪問</span></label>
+            <label class="chip"><input type="radio" name="svc" value="母乳外来"><span class="chip-face"><span class="c-emoji">🤱</span>母乳外来</span></label>
+            <label class="chip"><input type="radio" name="svc" value="育児相談"><span class="chip-face"><span class="c-emoji">👶</span>育児相談</span></label>
+            <label class="chip"><input type="radio" name="svc" value="フットセラピー・ボディケア"><span class="chip-face"><span class="c-emoji">💆‍♀️</span>フットセラピー・ボディケア</span></label>
+            <label class="chip"><input type="radio" name="svc" value="クラス・イベント / その他"><span class="chip-face"><span class="c-emoji">🎉</span>クラス・イベント / その他</span></label>
+          </div>
+          <p class="field-error" id="errSvc">メニューをお選びください。</p>
+          <p class="field-hint">※産後ケア(デイサービス・訪問)のご利用には、お住まいの福祉保健センターへの申請が必要です。</p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="date1">第一希望日 <span class="tag tag-req">必須</span></label>
+          <div class="field-row">
+            <input class="field" type="date" id="date1" name="date1">
+            <select class="field" id="time1" name="time1" aria-label="第一希望の時間">
+              <option value="">時間を選ぶ(任意)</option>
+              <option>9:00頃</option>
+              <option>10:00頃</option>
+              <option>11:00頃</option>
+              <option>13:00頃</option>
+              <option>14:00頃</option>
+              <option>15:00頃</option>
+              <option>16:00頃</option>
+              <option>17:00頃</option>
+              <option>時間は相談したい</option>
+            </select>
+          </div>
+          <p class="field-error" id="errDate1">第一希望日をお選びください。(日曜・祝日は休院日です)</p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="date2">第二希望日 <span class="tag tag-opt">任意</span></label>
+          <div class="field-row">
+            <input class="field" type="date" id="date2" name="date2">
+            <select class="field" id="time2" name="time2" aria-label="第二希望の時間">
+              <option value="">時間を選ぶ(任意)</option>
+              <option>9:00頃</option>
+              <option>10:00頃</option>
+              <option>11:00頃</option>
+              <option>13:00頃</option>
+              <option>14:00頃</option>
+              <option>15:00頃</option>
+              <option>16:00頃</option>
+              <option>17:00頃</option>
+              <option>時間は相談したい</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="name">お名前 <span class="tag tag-req">必須</span></label>
+          <input class="field" type="text" id="name" name="name" placeholder="例)有馬 花子" autocomplete="name">
+          <p class="field-error" id="errName">お名前をご入力ください。</p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="baby">赤ちゃんの月齢 <span class="tag tag-opt">任意</span></label>
+          <input class="field" type="text" id="baby" name="baby" placeholder="例)生後2ヶ月 / 妊娠中(32週)">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="memo">ご相談内容・ご質問 <span class="tag tag-opt">任意</span></label>
+          <textarea class="field" id="memo" name="memo" placeholder="例)母乳の飲みが悪く心配です。おっぱいの張りも強いので見ていただきたいです。"></textarea>
+        </div>
+
+        <div class="form-group">
+          <p class="form-label">送信されるメッセージ</p>
+          <div class="preview-box" id="preview" aria-live="polite">フォームに入力すると、ここにメッセージが表示されます。</div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-solid">💬 LINEで送信する</button>
+          <button type="button" class="btn btn-outline" id="copyBtn">内容をコピーする</button>
+        </div>
+        <p class="form-note">「LINEで送信する」を押すと、ありま助産院のLINEトーク画面が開きます。<br>内容をご確認のうえ、送信ボタンを押してください。予約はメッセージ送信後、返信をもって確定となります。</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- 予約の流れ -->
+  <section class="section booking">
+    <div class="container">
+      <p class="sec-label reveal">Flow</p>
+      <h2 class="sec-title reveal">ご予約の流れ</h2>
+
+      <div class="flow-list" data-stagger=".12">
+        <div class="flow-item reveal">
+          <p class="flow-num">01</p>
+          <div>
+            <h3>ご希望の日時を送信</h3>
+            <p>WEB予約カレンダー・LINEフォーム・お電話のいずれかで、ご希望のメニューと日時をお知らせください。</p>
+          </div>
+        </div>
+        <div class="flow-item reveal">
+          <p class="flow-num">02</p>
+          <div>
+            <h3>予約確定のご連絡</h3>
+            <p>助産院から確認のご連絡をいたします。LINEの場合は返信をもって予約確定となります。</p>
+          </div>
+        </div>
+        <div class="flow-item reveal">
+          <p class="flow-num">03</p>
+          <div>
+            <h3>当日ご来院・ご訪問</h3>
+            <p>母子健康手帳をお持ちのうえ、リラックスしてお越しください。訪問の場合は助産師がご自宅へ伺います。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="note-box reveal">
+        <h3>ご予約にあたってのお願い</h3>
+        <ul>
+          <li>産後ケア(デイサービス・訪問)のご利用には、お住まいの福祉保健センターへの事前申請が必要です。</li>
+          <li>休院日は日曜・祝日です。開院時間は月〜土 9:00〜18:00となります。</li>
+          <li>キャンセル・日時変更の場合は、お早めにLINEまたはお電話でご連絡ください。</li>
+          <li>体調がすぐれない場合(発熱など)は、無理をせずご相談ください。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ご予約・お問い合わせ -->
+  <section id="contact" class="contact">
+    <p class="sec-label reveal">Contact</p>
+    <h2 class="sec-title reveal">お困りの際は<br>お気軽にご連絡ください</h2>
+    <p class="sec-sub reveal">「どのメニューがいいかわからない」というご相談も大歓迎です。</p>
+
+    <div class="contact-cards" data-stagger=".12">
+      <a class="contact-card reveal" href="https://line.me/R/ti/p/@813zbbgz" target="_blank" rel="noopener">
+        <span class="c-emoji">💬</span>
+        <p class="c-label">予約はLINEから</p>
+        <p class="c-value">@813zbbgz</p>
+      </a>
+      <a class="contact-card reveal" href="https://www.instagram.com/arima_jyo3in" target="_blank" rel="noopener">
+        <span class="c-emoji">📸</span>
+        <p class="c-label">Instagram</p>
+        <p class="c-value">@arima_jyo3in</p>
+      </a>
+      <!-- href の tel: に電話番号を入れてください -->
+      <a class="contact-card reveal" href="tel:">
+        <span class="c-emoji">☎️</span>
+        <p class="c-label">タップで電話</p>
+        <p class="c-value">お電話はこちら</p>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p class="footer-brand">ありま助産院</p>
+  <nav class="footer-nav" aria-label="フッター">
+    <a href="index.html#about">助産院について</a>
+    <a href="index.html#services">サービス</a>
+    <a href="index.html#access">アクセス</a>
+    <a href="reservation.html">ご予約</a>
+    <a href="index.html#contact">お問い合わせ</a>
+    <a href="https://line.me/R/ti/p/@813zbbgz" target="_blank" rel="noopener">LINE</a>
+    <a href="https://www.instagram.com/arima_jyo3in" target="_blank" rel="noopener">Instagram</a>
+  </nav>
+  <p class="copyright">© 2025 ありま助産院. All rights reserved.</p>
+</footer>
+
+<script>
+// ===== WEB予約(Googleカレンダー 予約スケジュール) =====
+// 設定手順:
+//   1. Googleカレンダー(PC) → 「作成」→「予約スケジュール」で予約ページを作成
+//   2. 予約ページにカーソル → 「⋮」→「共有オプション」→「ウェブサイトに埋め込む」
+//   3. 「インラインの予約ページ」を選び、コード内の src="..." のURLをコピー
+//   4. 下の BOOKING_URL に貼り付け(index.html 側にも同じURLを設定してください)
+const BOOKING_URL = "";  // 例: "https://calendar.google.com/calendar/appointments/schedules/AcZssZ...?gv=true"
+
+if (BOOKING_URL) {
+  const card = document.getElementById('bookingCard');
+  const url = BOOKING_URL.includes('gv=true')
+    ? BOOKING_URL
+    : BOOKING_URL + (BOOKING_URL.includes('?') ? '&' : '?') + 'gv=true';
+  card.innerHTML = '';
+  const f = document.createElement('iframe');
+  f.src = url;
+  f.title = 'ご予約カレンダー';
+  f.loading = 'lazy';
+  card.appendChild(f);
+}
+
+// ===== LINE予約フォーム =====
+const LINE_ID = '@813zbbgz';  // ありま助産院 LINE公式アカウントID
+
+const form    = document.getElementById('resForm');
+const preview = document.getElementById('preview');
+const copyBtn = document.getElementById('copyBtn');
+
+// 今日以降のみ選択可に
+(() => {
+  const t = new Date();
+  const iso = `${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`;
+  document.getElementById('date1').min = iso;
+  document.getElementById('date2').min = iso;
+})();
+
+// 「2026-07-10」→「7月10日(金)」
+function fmtDate(v){
+  if(!v) return '';
+  const d = new Date(v + 'T00:00:00');
+  const w = ['日','月','火','水','木','金','土'][d.getDay()];
+  return `${d.getMonth()+1}月${d.getDate()}日(${w})`;
+}
+function isSunday(v){
+  return v && new Date(v + 'T00:00:00').getDay() === 0;
+}
+
+function buildMessage(){
+  const svc   = form.querySelector('input[name="svc"]:checked');
+  const date1 = form.date1.value;
+  const time1 = form.time1.value;
+  const date2 = form.date2.value;
+  const time2 = form.time2.value;
+  const name  = form.name.value.trim();
+  const baby  = form.baby.value.trim();
+  const memo  = form.memo.value.trim();
+
+  const lines = ['【ご予約希望】'];
+  lines.push(`■ お名前:${name || '(未入力)'}`);
+  lines.push(`■ メニュー:${svc ? svc.value : '(未選択)'}`);
+  lines.push(`■ 第一希望:${date1 ? fmtDate(date1) : '(未選択)'}${time1 ? ' ' + time1 : ''}`);
+  if(date2) lines.push(`■ 第二希望:${fmtDate(date2)}${time2 ? ' ' + time2 : ''}`);
+  if(baby)  lines.push(`■ 赤ちゃんの月齢:${baby}`);
+  if(memo)  lines.push('■ ご相談内容:', memo);
+  return lines.join('\n');
+}
+
+function updatePreview(){
+  preview.textContent = buildMessage();
+}
+form.addEventListener('input', updatePreview);
+form.addEventListener('change', updatePreview);
+
+function validate(){
+  let ok = true;
+  const svcOk  = !!form.querySelector('input[name="svc"]:checked');
+  const dateOk = !!form.date1.value && !isSunday(form.date1.value);
+  const nameOk = !!form.name.value.trim();
+
+  document.getElementById('errSvc').classList.toggle('show', !svcOk);
+  document.getElementById('errDate1').classList.toggle('show', !dateOk);
+  document.getElementById('errName').classList.toggle('show', !nameOk);
+
+  ok = svcOk && dateOk && nameOk;
+  if(!ok){
+    const firstErr = document.querySelector('.field-error.show');
+    if(firstErr) firstErr.closest('.form-group').scrollIntoView({ behavior:'smooth', block:'center' });
+  }
+  return ok;
+}
+
+// LINEで送信(LINE公式アカウントのトークにメッセージを引き継いで開く)
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  if(!validate()) return;
+  const url = 'https://line.me/R/oaMessage/' + encodeURIComponent(LINE_ID) + '/?' + encodeURIComponent(buildMessage());
+  window.open(url, '_blank', 'noopener');
+});
+
+// 内容をコピー(LINEが開けない環境向けのフォールバック)
+copyBtn.addEventListener('click', async () => {
+  if(!validate()) return;
+  const msg = buildMessage();
+  try{
+    await navigator.clipboard.writeText(msg);
+  }catch(_){
+    const ta = document.createElement('textarea');
+    ta.value = msg;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    ta.remove();
+  }
+  const original = copyBtn.textContent;
+  copyBtn.textContent = 'コピーしました ✓';
+  setTimeout(() => { copyBtn.textContent = original; }, 2000);
+});
+
+// ===== スクロール表示アニメーション(index.html と共通) =====
+document.querySelectorAll('[data-stagger]').forEach(group => {
+  const step = parseFloat(group.dataset.stagger) || .1;
+  const wrap = parseInt(group.dataset.staggerWrap) || Infinity;
+  Array.from(group.children).forEach((child, i) => {
+    child.classList.add('reveal');
+    if(!child.style.getPropertyValue('--d')){
+      child.style.setProperty('--d', ((i % wrap) * step).toFixed(2) + 's');
+    }
+  });
+});
+
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+  });
+}, { threshold:.15, rootMargin:'0px 0px -8% 0px' });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
