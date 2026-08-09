@@ -27,6 +27,10 @@
   <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
+  <!-- ヒーロー背景は最大コンテンツ描画(LCP)の対象。画面幅に応じて先読みする -->
+  <link rel="preload" as="image" href="images/hero-sp.webp" media="(max-width: 819px)">
+  <link rel="preload" as="image" href="images/hero-pc.webp" media="(min-width: 820px)">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&display=swap"
@@ -158,27 +162,43 @@
       text-align: center;
       overflow: hidden;
       padding: 88px 24px 96px;
-    }
-
-    /* ※動画では「赤ちゃんの足」の写真背景。
-   写真を用意したら .hero-bg に background-image を指定してください。 */
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      z-index: -2;
+      /* 負のz-indexの .hero-bg / .hero-veil を .hero の内側に閉じ込める。
+         これが無いと2つがルートまで抜け、下のフォールバック背景に隠れてしまう */
+      isolation: isolate;
+      /* 写真の読み込み前・読み込み失敗時に見えるフォールバック */
       background:
         radial-gradient(110% 75% at 72% 18%, #ECC9C6 0%, rgba(236, 201, 198, 0) 62%),
         radial-gradient(95% 70% at 18% 85%, #D8A6A6 0%, rgba(216, 166, 166, 0) 58%),
         linear-gradient(160deg, #E6C0BD 0%, #D5A4A4 48%, #C18E95 100%);
-      background-size: cover;
-      background-position: center;
     }
 
+    /* 背景写真。スマホは縦位置、820px以上は横位置に切り替え */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background-image: url("images/hero-sp.webp");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    @media (min-width:820px) {
+      .hero-bg {
+        background-image: url("images/hero-pc.webp");
+      }
+    }
+
+    /* 白い寝具の写真なので、白文字が読めるよう下側を重めに暗くする */
     .hero-veil {
       position: absolute;
       inset: 0;
       z-index: -1;
-      background: rgba(76, 42, 52, .30);
+      background:
+        linear-gradient(180deg,
+          rgba(76, 42, 52, .34) 0%,
+          rgba(76, 42, 52, .50) 45%,
+          rgba(76, 42, 52, .58) 100%);
     }
 
     .hero-inner {
@@ -871,7 +891,7 @@
 
     <!-- ヒーロー -->
     <section class="hero">
-      <div class="hero-bg" role="img" aria-label="赤ちゃんの足の写真(差し替え用の代替背景)"></div>
+      <div class="hero-bg" role="img" aria-label="赤ちゃんの小さな手をそっと握るママの手"></div>
       <div class="hero-veil"></div>
       <div class="hero-inner">
         <p class="hero-eyebrow reveal" style="--d:.1s"><span class="dot"></span>ありま助産院 ― Arima Midwifery Clinic</p>
