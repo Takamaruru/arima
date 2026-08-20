@@ -394,6 +394,43 @@ select.field{
   .form-actions{ flex-direction:row; }
   .form-actions .btn{ width:auto; flex:1; }
 }
+/* PC向けのLINE送信ガイド。送信ボタンを押したときだけ表示する */
+.pc-guide{
+  margin-top:26px;
+  background:var(--bg-section);
+  border:1px solid var(--divider);
+  border-radius:20px;
+  padding:26px 22px 24px;
+}
+.pc-guide[hidden]{ display:none; }
+.pc-guide-title{
+  font-size:15px; font-weight:600; letter-spacing:.1em;
+  color:var(--rose); margin-bottom:8px;
+}
+.pc-guide-lead{
+  font-size:13px; line-height:1.9; letter-spacing:.06em;
+  color:var(--ink-body); margin-bottom:20px;
+}
+.pc-guide-cols{ display:grid; gap:20px; }
+.pc-guide-col{
+  background:#fff; border-radius:16px; padding:20px 18px;
+}
+.pc-guide-h{
+  font-size:13.5px; font-weight:600; letter-spacing:.08em;
+  color:var(--ink); margin-bottom:8px;
+}
+.pc-guide-t{
+  font-size:12.5px; line-height:1.9; letter-spacing:.05em;
+  color:var(--ink-soft); margin-bottom:14px;
+}
+.pc-guide-qr{ width:150px; height:150px; display:block; }
+.pc-guide-note{
+  margin-top:18px;
+  font-size:12.5px; line-height:1.9; color:var(--ink-soft);
+}
+@media (min-width:820px){
+  .pc-guide-cols{ grid-template-columns:1fr 1fr; }
+}
 .form-note{
   margin-top:22px;
   font-size:12px; line-height:2; letter-spacing:.06em;
@@ -700,6 +737,26 @@ a:focus-visible,.btn:focus-visible,.pill:focus-visible{
           <button type="button" class="btn btn-outline" id="copyBtn">内容をコピーする</button>
         </div>
         <p class="form-note">「LINEで送信する」を押すと、ありま助産院のLINEトーク画面が開きます。<br>内容をご確認のうえ、送信ボタンを押してください。予約はメッセージ送信後、返信をもって確定となります。</p>
+
+        <!-- PCではLINEアプリにメッセージを引き継げないため、その場合の案内 -->
+        <div class="pc-guide" id="pcGuide" hidden>
+          <p class="pc-guide-title">予約内容をコピーしました</p>
+          <p class="pc-guide-lead">パソコンからはLINEに内容を引き継げないため、下のいずれかの方法で送信してください。</p>
+          <div class="pc-guide-cols">
+            <div class="pc-guide-col">
+              <p class="pc-guide-h">パソコンのLINEを使う</p>
+              <p class="pc-guide-t">LINEを開き、トーク画面に貼り付け(Ctrl+V / ⌘+V)して送信してください。</p>
+              <a class="pill" href="https://line.me/R/ti/p/@813zbbgz" target="_blank" rel="noopener">LINEでトークを開く</a>
+            </div>
+            <div class="pc-guide-col">
+              <p class="pc-guide-h">スマートフォンで送る</p>
+              <p class="pc-guide-t">QRコードを読み取ってトークを開き、上の「送信されるメッセージ」を見ながら送信してください。</p>
+              <img class="pc-guide-qr" src="images/line-qr.svg"
+                alt="ありま助産院のLINE公式アカウントのQRコード" width="150" height="150" loading="lazy">
+            </div>
+          </div>
+          <p class="pc-guide-note">うまくいかない場合は、お電話でも承っております。</p>
+        </div>
       </form>
     </div>
   </section>
@@ -916,31 +973,91 @@ function validate(){
   return ok;
 }
 
-// LINEで送信(LINE公式アカウントのトークにメッセージを引き継いで開く)
+// スマホかどうかの判定。
+// line.me/R/oaMessage/ でメッセージを引き継げるのはLINEアプリが開ける端末だけで、
+// PCではトーク画面が開かない(または内容が渡らない)ため送信方法を分ける。
+function isMobileDevice(){
+  if(navigator.userAgentData && typeof navigator.userAgentData.mobile === 'boolean'){
+    return navigator.userAgentData.mobile;
+  }
+  const ua = navigator.userAgent;
+  // iPadOSはUA上 Macintosh を名乗るのでタッチ点数で見分ける
+  const iPadOS = /Macintosh/.test(ua) && navigator.maxTouchPoints > 1;
+  return /iPhone|iPod|Android|Mobile/i.test(ua) || iPadOS;
+}
+
+function legacyCopy(text){
+  try{
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    const ok = document.execCommand('copy');
+    ta.remove();
+    return ok;
+  }catch(_){
+    return false;
+  }
+}
+
+// クリップボードの許可待ちで応答が返らない環境があるため、
+// 一定時間で打ち切って必ず結果を返す
+function copyText(text){
+  const viaApi = (navigator.clipboard && navigator.clipboard.writeText)
+    ? navigator.clipboard.writeText(text).then(() => true, () => legacyCopy(text))
+    : Promise.resolve(legacyCopy(text));
+  const timeout = new Promise(resolve => setTimeout(() => resolve(false), 1500));
+  return Promise.race([viaApi, timeout]);
+}
+
+const pcGuide = document.getElementById('pcGuide');
+
+// PCでは押す前から動きが分かるようにボタンの文言を変えておく
+if(!isMobileDevice()){
+  const submitBtn = form.querySelector('button[type="submit"]');
+  const label = submitBtn.lastChild;
+  // 隣の「内容をコピーする」ボタンと文言が重ならないようにする
+  if(label && label.nodeType === Node.TEXT_NODE) label.textContent = ' コピーして送信方法を見る';
+  document.querySelector('.form-note').textContent =
+    'パソコンからはLINEに内容を引き継げません。ボタンを押すと予約内容をコピーし、送信方法をご案内します。予約はメッセージ送信後、返信をもって確定となります。';
+}
+
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   if(!validate()) return;
-  const url = 'https://line.me/R/oaMessage/' + encodeURIComponent(LINE_ID) + '/?' + encodeURIComponent(buildMessage());
-  window.open(url, '_blank', 'noopener');
+  const msg = buildMessage();
+
+  if(isMobileDevice()){
+    const url = 'https://line.me/R/oaMessage/' + encodeURIComponent(LINE_ID) + '/?' + encodeURIComponent(msg);
+    window.open(url, '_blank', 'noopener');
+    return;
+  }
+
+  // PC: メッセージを引き継げないので送信手順を案内する。
+  // コピーの成否を待たずに先に表示する(クリップボードが使えない環境でも案内は出す)
+  pcGuide.hidden = false;
+  pcGuide.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+  copyText(msg).then((copied) => {
+    pcGuide.querySelector('.pc-guide-title').textContent =
+      copied ? '予約内容をコピーしました' : '予約内容をコピーできませんでした';
+    pcGuide.querySelector('.pc-guide-lead').textContent = copied
+      ? 'パソコンからはLINEに内容を引き継げないため、下のいずれかの方法で送信してください。'
+      : '上の「送信されるメッセージ」を選択してコピーし、下のいずれかの方法で送信してください。';
+  });
 });
 
 // 内容をコピー(LINEが開けない環境向けのフォールバック)
-copyBtn.addEventListener('click', async () => {
+copyBtn.addEventListener('click', () => {
   if(!validate()) return;
-  const msg = buildMessage();
-  try{
-    await navigator.clipboard.writeText(msg);
-  }catch(_){
-    const ta = document.createElement('textarea');
-    ta.value = msg;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    ta.remove();
-  }
   const original = copyBtn.textContent;
-  copyBtn.textContent = 'コピーしました ✓';
-  setTimeout(() => { copyBtn.textContent = original; }, 2000);
+  copyText(buildMessage()).then((ok) => {
+    copyBtn.textContent = ok ? 'コピーしました ✓' : 'コピーできませんでした';
+    setTimeout(() => { copyBtn.textContent = original; }, 2000);
+  });
 });
 
 // ===== スクロール表示アニメーション(index.html と共通) =====
