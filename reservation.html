@@ -329,6 +329,11 @@ a{ color:inherit; text-decoration:none; }
 .date-field.is-filled .date-ph,
 .date-field .field:focus ~ .date-ph{ display:none; }
 .date-field:not(.is-filled) .field:not(:focus)::-webkit-datetime-edit{ opacity:0; }
+/* スマホでは日付欄をタップしやすいよう高さを確保する。
+   iOSは未入力だと中身の高さが出ず潰れることがあるため min-height で下限を決める */
+@media (max-width:819px){
+  .field[type="date"]{ min-height:56px; }
+}
 .field:focus{
   outline:none;
   border-color:var(--rose-btn);
