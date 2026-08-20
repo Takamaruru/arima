@@ -420,10 +420,22 @@
       padding: 26px 20px;
     }
 
-    .feature-card .f-emoji {
-      font-size: 26px;
+    /* 絵文字と画像アイコンが混在しても4枚の高さが揃うよう箱を固定 */
+    .feature-card .f-emoji,
+    .feature-card .f-icon {
       display: block;
+      height: 40px;
       margin-bottom: 12px;
+    }
+
+    .feature-card .f-emoji {
+      font-size: 30px;
+      line-height: 40px;
+    }
+
+    .feature-card .f-icon {
+      width: 40px;
+      object-fit: contain;
     }
 
     .feature-card .f-text {
@@ -939,15 +951,15 @@
             <span class="f-text">産後ケア専門</span>
           </div>
           <div class="feature-card reveal">
-            <span class="f-emoji">💗</span>
+            <img class="f-icon" src="images/icon-support.webp" alt="" width="256" height="256" loading="lazy" decoding="async">
             <span class="f-text">24時間サポート体制</span>
           </div>
           <div class="feature-card reveal">
-            <span class="f-emoji">🤱</span>
+            <img class="f-icon" src="images/icon-nursing.webp" alt="" width="256" height="256" loading="lazy" decoding="async">
             <span class="f-text">母乳育児をサポート</span>
           </div>
           <div class="feature-card reveal">
-            <span class="f-emoji">🏡</span>
+            <img class="f-icon" src="images/icon-athome.webp" alt="" width="256" height="256" loading="lazy" decoding="async">
             <span class="f-text">アットホームな環境</span>
           </div>
         </div>
