@@ -566,6 +566,14 @@
       transition: background .25s, transform .25s;
     }
 
+    /* ピル内のアイコン。文字色に追従させるので hover でも自動で揃う */
+    .pill .pill-icon {
+      width: 16px;
+      height: 16px;
+      flex: none;
+      fill: currentColor;
+    }
+
     .pill:hover {
       background: var(--rose-deep);
       transform: translateY(-1px);
@@ -634,9 +642,10 @@
       text-align: center;
     }
 
-    .booking-empty .b-emoji {
-      font-size: 38px;
-      line-height: 1;
+    .booking-empty .b-icon {
+      width: 38px;
+      height: 38px;
+      fill: var(--pink-label);
     }
 
     .booking-empty .b-title {
@@ -1070,7 +1079,7 @@
           <div class="access-row">
             <dt>電話</dt>
             <!-- href の tel: に電話番号を入れてください -->
-            <dd><a class="pill" href="tel:"><span>📞</span>タップで電話</a></dd>
+            <dd><a class="pill" href="tel:"><svg class="pill-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>タップで電話</a></dd>
           </div>
           <div class="access-row">
             <dt>開院時間</dt>
@@ -1083,7 +1092,7 @@
           <div class="access-row">
             <dt>予約可能日</dt>
             <!-- WEB予約セクション(Googleカレンダー埋め込み)へ誘導 -->
-            <dd><a class="pill" href="#booking"><span>📅</span>Googleカレンダーで確認</a></dd>
+            <dd><a class="pill" href="#booking"><svg class="pill-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19,4h-1V2h-2v2H8V2H6v2H5C3.89,4,3.01,4.9,3.01,6L3,20c0,1.1,0.89,2,2,2h14c1.1,0,2-0.9,2-2V6C21,4.9,20.1,4,19,4z M19,20 H5V10h14V20z M9,14H7v-2h2V14z M13,14h-2v-2h2V14z M17,14h-2v-2h2V14z M9,18H7v-2h2V18z M13,18h-2v-2h2V18z M17,18h-2v-2h2V18z"/></svg>Googleカレンダーで確認</a></dd>
           </div>
         </dl>
 
@@ -1096,7 +1105,7 @@
         <p class="map-actions reveal">
           <a class="pill"
             href="https://www.google.com/maps/dir/?api=1&amp;destination=%E7%9F%B3%E5%B7%9D%E7%9C%8C%E9%87%8E%E3%80%85%E5%B8%82%E5%B8%82%E5%A4%AA%E5%B9%B3%E5%AF%BA3-183-5"
-            target="_blank" rel="noopener"><span>🚗</span>ここへの経路を調べる</a>
+            target="_blank" rel="noopener"><svg class="pill-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>ここへの経路を調べる</a>
         </p>
       </div>
     </section>
@@ -1111,7 +1120,7 @@
         <!-- 予約カレンダーは下部scriptの BOOKING_URL を設定すると表示されます -->
         <div class="booking-card reveal reveal-zoom" id="bookingCard">
           <div class="booking-empty">
-            <span class="b-emoji">📅</span>
+            <svg class="b-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19,4h-1V2h-2v2H8V2H6v2H5C3.89,4,3.01,4.9,3.01,6L3,20c0,1.1,0.89,2,2,2h14c1.1,0,2-0.9,2-2V6C21,4.9,20.1,4,19,4z M19,20 H5V10h14V20z M9,14H7v-2h2V14z M13,14h-2v-2h2V14z M17,14h-2v-2h2V14z M9,18H7v-2h2V18z M13,18h-2v-2h2V18z M17,18h-2v-2h2V18z"/></svg>
             <span class="b-title">予約カレンダーをここに表示できます</span>
             <span class="b-sub">Googleカレンダーの「予約スケジュール」の埋め込みURLを<br>ページ下部の BOOKING_URL に貼り付けると有効になります。</span>
           </div>
