@@ -23,3 +23,7 @@
 # HTML は更新をすぐ反映させたいので毎回確認させる
 /*.html
   Cache-Control: public, max-age=0, must-revalidate
+
+# お知らせも同様に、更新したらすぐ反映されるようにする
+/news.json
+  Cache-Control: public, max-age=0, must-revalidate

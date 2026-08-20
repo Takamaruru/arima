@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ご予約 | ありま助産院(石川県野々市市)</title>
-<meta name="description" content="ありま助産院のご予約ページ。WEB予約カレンダー・LINE・お電話から、産後ケア・母乳外来・育児相談などをご予約いただけます。">
+<title>ご予約 | ありま助産院(石川県野々市市の産後ケア・母乳育児相談)</title>
+<meta name="description" content="石川県野々市市のありま助産院のご予約ページ。産後ケア・母乳育児相談・産後トラブル・フットセラピー・子育て支援のご予約をLINE・お電話から承ります。空き状況はカレンダーでご確認いただけます。">
+<!-- keywords は Google の順位判定には使われません。詳細は index.html 側のコメントを参照 -->
+<meta name="keywords" content="助産院,石川県,野々市市,産後ケア,母乳育児相談,産後トラブル,子育て支援,フットセラピー,妊婦">
 <link rel="canonical" href="https://arima-josanin.com/reservation.html">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="theme-color" content="#AF496E">
@@ -13,8 +15,8 @@
 <meta property="og:site_name" content="ありま助産院">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:url" content="https://arima-josanin.com/reservation.html">
-<meta property="og:title" content="ご予約 | ありま助産院(石川県野々市市)">
-<meta property="og:description" content="ありま助産院のご予約ページ。WEB予約カレンダー・LINE・お電話から、産後ケア・母乳外来・育児相談などをご予約いただけます。">
+<meta property="og:title" content="ご予約 | ありま助産院(石川県野々市市の産後ケア・母乳育児相談)">
+<meta property="og:description" content="石川県野々市市のありま助産院のご予約ページ。産後ケア・母乳育児相談・産後トラブル・フットセラピー・子育て支援のご予約をLINE・お電話から承ります。空き状況はカレンダーでご確認いただけます。">
 <meta property="og:image" content="https://arima-josanin.com/images/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -252,39 +254,60 @@ a{ color:inherit; text-decoration:none; }
   color:var(--ink-soft);
 }
 @media (min-width:820px){
-  .methods{ grid-template-columns:repeat(3,1fr); }
+  .methods{ grid-template-columns:repeat(2,1fr); }
 }
 
-/* ---------- WEB予約カレンダー ---------- */
-.booking{ background:var(--bg-section); }
-.booking-card{
+/* ---------- 空き状況カレンダー ---------- */
+.tinted{ background:var(--bg-section); }
+/* hidden属性が .cal-modes の display:flex に負けないようにする */
+[hidden]{ display:none !important; }
+
+/* スマホ用の表示切り替え(月表示 / リスト)。PCでは出さない */
+.cal-modes{ margin-top:40px; display:flex; justify-content:center; gap:8px; }
+.cal-mode{
+  font:inherit; font-size:12.5px; letter-spacing:.1em;
+  color:var(--rose-btn); background:#fff;
+  border:1px solid #EFD3DE; border-radius:999px;
+  padding:9px 20px; cursor:pointer;
+  transition:background .25s, border-color .25s, color .25s;
+}
+.cal-mode[aria-pressed="true"]{ background:var(--rose-btn); border-color:var(--rose-btn); color:#fff; }
+.cal-hint{ margin-top:12px; font-size:12px; letter-spacing:.06em; color:var(--ink-soft); text-align:center; }
+.cal-card{
   margin-top:48px;
   background:#fff;
   border-radius:26px;
   box-shadow:0 12px 34px rgba(175,73,110,.09);
   overflow:hidden;
 }
-.booking-card iframe{ display:block; width:100%; height:660px; border:0; }
-.booking-empty{
+.cal-card iframe{ display:block; width:100%; height:520px; border:0; }
+/* スマホの月表示は幅を詰めると日付が潰れる。最低幅を持たせて横スクロールで全体を見せる */
+.cal-card.is-scroll-x{ overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; }
+/* 幅はカードいっぱいに広げつつ360pxを下限にする。
+   下限がないと日付やイベント名が潰れるため、入りきらないぶんは横スクロールで見てもらう */
+.cal-card.is-scroll-x iframe{ width:100%; min-width:360px; height:560px; }
+.cal-empty{
   padding:70px 28px;
   display:flex; flex-direction:column; align-items:center; gap:14px;
   text-align:center;
 }
-.booking-empty .b-icon{ width:38px; height:38px; fill:var(--pink-label); }
-.booking-empty .b-title{ font-size:15px; letter-spacing:.1em; color:#B0517A; }
-.booking-empty .b-sub{ font-size:12.5px; line-height:2.1; color:var(--ink-soft); }
-.booking-alt{
+.cal-empty .b-icon{ width:38px; height:38px; fill:var(--pink-label); }
+.cal-empty .b-title{ font-size:15px; letter-spacing:.1em; color:#B0517A; }
+.cal-empty .b-sub{ font-size:12.5px; line-height:2.1; color:var(--ink-soft); }
+.cal-alt{
   margin-top:28px;
   font-size:13.5px; line-height:2; letter-spacing:.06em;
   color:var(--ink-soft);
   text-align:center;
 }
-.booking-alt a{
+.cal-alt a{
   color:#B0517A;
   text-decoration:underline; text-underline-offset:4px;
 }
 @media (min-width:820px){
-  .booking .container{ max-width:820px; }
+  .tinted .container{ max-width:820px; }
+  .cal-card{ margin-top:48px; }
+  .cal-card iframe{ height:640px; }
 }
 
 /* ---------- 予約フォーム ---------- */
@@ -645,7 +668,7 @@ a:focus-visible,.btn:focus-visible,.pill:focus-visible{
   <section class="page-hero">
     <p class="sec-label reveal" style="--d:.1s">Reservation</p>
     <h1 class="reveal" style="--d:.25s">ご予約</h1>
-    <p class="hero-lead reveal" style="--d:.45s">WEB・LINE・お電話からご予約いただけます。<br>初めての方もお気軽にどうぞ。</p>
+    <p class="hero-lead reveal" style="--d:.45s">LINE・お電話からご予約いただけます。<br>初めての方もお気軽にどうぞ。</p>
   </section>
 
   <!-- 予約方法 -->
@@ -656,11 +679,6 @@ a:focus-visible,.btn:focus-visible,.pill:focus-visible{
       <p class="sec-sub reveal">ご都合のよい方法をお選びください。</p>
 
       <div class="methods" data-stagger=".12">
-        <a class="method-card reveal" href="#calendar">
-          <svg class="m-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19,4h-1V2h-2v2H8V2H6v2H5C3.89,4,3.01,4.9,3.01,6L3,20c0,1.1,0.89,2,2,2h14c1.1,0,2-0.9,2-2V6C21,4.9,20.1,4,19,4z M19,20 H5V10h14V20z M9,14H7v-2h2V14z M13,14h-2v-2h2V14z M17,14h-2v-2h2V14z M9,18H7v-2h2V18z M13,18h-2v-2h2V18z M17,18h-2v-2h2V18z"/></svg>
-          <p class="m-title">WEB予約</p>
-          <p class="m-text">空き状況を見ながら<br>24時間いつでも予約OK</p>
-        </a>
         <a class="method-card reveal" href="#form">
           <svg class="m-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
           <p class="m-title">LINE予約</p>
@@ -676,23 +694,31 @@ a:focus-visible,.btn:focus-visible,.pill:focus-visible{
     </div>
   </section>
 
-  <!-- WEB予約(Googleカレンダー 予約スケジュール埋め込み) -->
-  <section id="calendar" class="section booking">
+  <!-- 空き状況(Googleカレンダー埋め込み) -->
+  <section id="calendar" class="section tinted">
     <div class="container">
-      <p class="sec-label reveal">Web Reservation</p>
-      <h2 class="sec-title reveal">WEB予約カレンダー</h2>
-      <p class="sec-sub reveal">空き状況を確認しながら、24時間いつでもご予約いただけます。</p>
+      <p class="sec-label reveal">Availability</p>
+      <h2 class="sec-title reveal">空き状況</h2>
+      <p class="sec-sub reveal">空きのある日と、クラス・イベントの日程をご確認いただけます。</p>
 
-      <!-- 予約カレンダーは下部scriptの BOOKING_URL を設定すると表示されます -->
-      <div class="booking-card reveal reveal-zoom" id="bookingCard">
-        <div class="booking-empty">
+      <!-- スマホは月表示だと日付が潰れるため、リストと切り替えられるようにする(PCでは非表示) -->
+      <div class="cal-modes reveal" id="calModes" hidden>
+        <button type="button" class="cal-mode" data-mode="AGENDA">リスト</button>
+        <button type="button" class="cal-mode" data-mode="MONTH">月表示</button>
+      </div>
+
+      <!-- カレンダーは下部scriptの SCHEDULE_CAL_ID を設定すると表示されます -->
+      <div class="cal-card reveal reveal-zoom" id="scheduleCard">
+        <div class="cal-empty">
           <svg class="b-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19,4h-1V2h-2v2H8V2H6v2H5C3.89,4,3.01,4.9,3.01,6L3,20c0,1.1,0.89,2,2,2h14c1.1,0,2-0.9,2-2V6C21,4.9,20.1,4,19,4z M19,20 H5V10h14V20z M9,14H7v-2h2V14z M13,14h-2v-2h2V14z M17,14h-2v-2h2V14z M9,18H7v-2h2V18z M13,18h-2v-2h2V18z M17,18h-2v-2h2V18z"/></svg>
-          <span class="b-title">予約カレンダーをここに表示できます</span>
-          <span class="b-sub">Googleカレンダーの「予約スケジュール」の埋め込みURLを<br>ページ下部の BOOKING_URL に貼り付けると有効になります。</span>
+          <span class="b-title">空き状況カレンダーをここに表示できます</span>
+          <span class="b-sub">GoogleカレンダーのカレンダーIDを<br>ページ下部の SCHEDULE_CAL_ID に貼り付けると有効になります。</span>
         </div>
       </div>
 
-      <p class="booking-alt reveal">WEB予約がうまくいかない場合は、下の <a href="#form">LINE予約フォーム</a> または <a href="index.html#contact">お電話</a> でもご予約いただけます。</p>
+      <p class="cal-hint" id="calHint" hidden>← 横にスクロールすると月全体を見られます →</p>
+
+      <p class="cal-alt reveal">ご希望の日が決まりましたら、下の <a href="#form">LINE予約フォーム</a> または <a href="index.html#contact">お電話</a> からお申し込みください。</p>
     </div>
   </section>
 
@@ -823,7 +849,7 @@ a:focus-visible,.btn:focus-visible,.pill:focus-visible{
   </section>
 
   <!-- 予約の流れ -->
-  <section class="section booking">
+  <section class="section tinted">
     <div class="container">
       <p class="sec-label reveal">Flow</p>
       <h2 class="sec-title reveal">ご予約の流れ</h2>
@@ -833,7 +859,7 @@ a:focus-visible,.btn:focus-visible,.pill:focus-visible{
           <p class="flow-num">01</p>
           <div>
             <h3>ご希望の日時を送信</h3>
-            <p>WEB予約カレンダー・LINEフォーム・お電話のいずれかで、ご希望のメニューと日時をお知らせください。</p>
+            <p>LINEフォームまたはお電話で、ご希望のメニューと日時をお知らせください。</p>
           </div>
         </div>
         <div class="flow-item reveal">
@@ -943,25 +969,71 @@ if (navToggle && siteNav) {
   });
 }
 
-// ===== WEB予約(Googleカレンダー 予約スケジュール) =====
+// ===== 空き状況カレンダー(Googleカレンダーの埋め込み) =====
 // 設定手順:
-//   1. Googleカレンダー(PC) → 「作成」→「予約スケジュール」で予約ページを作成
-//   2. 予約ページにカーソル → 「⋮」→「共有オプション」→「ウェブサイトに埋め込む」
-//   3. 「インラインの予約ページ」を選び、コード内の src="..." のURLをコピー
-//   4. 下の BOOKING_URL に貼り付け(index.html 側にも同じURLを設定してください)
-const BOOKING_URL = "https://calendar.google.com/calendar/appointments/schedules/AcZssZ2dpVbyibeIp_ZsWt4QKLvoAva6at4AbrxzOs_O63t3C5PTcObJknMD9_VYD7kZWyhmgKaCj2QP?gv=true";
+//   1. Googleカレンダー(PC) → 対象カレンダーの「⋮」→「設定と共有」
+//   2. 「アクセス権限」→「一般公開して誰でも利用できるようにする」にチェック
+//      ※公開にしないと、サイトを見た方には「権限がありません」と表示されます
+//   3. 同じ画面の「カレンダーの統合」にある「カレンダーID」をコピー
+//   4. 下の SCHEDULE_CAL_ID に貼り付け(index.html 側にも同じIDを設定してください)
+const SCHEDULE_CAL_ID = "";  // 例: "arima.josanin@gmail.com"
 
-if (BOOKING_URL) {
-  const card = document.getElementById('bookingCard');
-  const url = BOOKING_URL.includes('gv=true')
-    ? BOOKING_URL
-    : BOOKING_URL + (BOOKING_URL.includes('?') ? '&' : '?') + 'gv=true';
+if (SCHEDULE_CAL_ID) {
+  const card  = document.getElementById('scheduleCard');
+  const modes = document.getElementById('calModes');
+  const hint  = document.getElementById('calHint');
+
+  const frame = document.createElement('iframe');
+  frame.title = 'ありま助産院の空き状況';
+  frame.loading = 'lazy';
   card.innerHTML = '';
-  const f = document.createElement('iframe');
-  f.src = url;
-  f.title = 'ご予約カレンダー';
-  f.loading = 'lazy';
-  card.appendChild(f);
+  card.appendChild(frame);
+
+  const narrow = window.matchMedia('(max-width:819px)');
+  // スマホの初期表示はリスト。月表示も見たい人はボタンで切り替えられる
+  let mode = narrow.matches ? 'AGENDA' : 'MONTH';
+
+  const render = () => {
+    const q = new URLSearchParams({
+      src: SCHEDULE_CAL_ID,
+      ctz: 'Asia/Tokyo',
+      hl: 'ja',
+      wkst: '1',                                  // 週の始まりを日曜に
+      mode: mode,
+      bgcolor: '#ffffff',
+      showTitle: '0', showPrint: '0', showTabs: '0',
+      showCalendars: '0', showTz: '0',
+      showNav: '1', showDate: '1',
+    });
+    const url = 'https://calendar.google.com/calendar/embed?' + q;
+    // 同じURLを入れ直すと無駄に再読み込みされるので、変わったときだけ差し替える
+    if (frame.src !== url) frame.src = url;
+
+    // スマホの月表示のときだけ、潰さずに見せるため横スクロールにする
+    const scrollX = narrow.matches && mode === 'MONTH';
+    card.classList.toggle('is-scroll-x', scrollX);
+    // 幅に収まっている端末ではスクロールできないので、はみ出すときだけ案内を出す
+    hint.hidden = !(scrollX && card.scrollWidth > card.clientWidth + 4);
+    modes.hidden = !narrow.matches;
+    modes.querySelectorAll('.cal-mode').forEach((b) => {
+      b.setAttribute('aria-pressed', String(b.dataset.mode === mode));
+    });
+  };
+
+  modes.addEventListener('click', (e) => {
+    const btn = e.target.closest('.cal-mode');
+    if (!btn || btn.dataset.mode === mode) return;
+    mode = btn.dataset.mode;
+    render();
+  });
+
+  // 画面幅が変わったら、その幅での既定の表示に戻す
+  narrow.addEventListener('change', () => {
+    mode = narrow.matches ? 'AGENDA' : 'MONTH';
+    render();
+  });
+
+  render();
 }
 
 // ===== LINE予約フォーム =====

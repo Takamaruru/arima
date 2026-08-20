@@ -4,8 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ありま助産院 | 石川県野々市市の産後ケア・母乳外来</title>
-  <meta name="description" content="石川県野々市市の助産院。産後ケア(デイサービス・訪問)、母乳外来、育児相談、フットセラピーなど、産後のママと赤ちゃんを丁寧にサポートします。">
+  <title>ありま助産院 | 石川県野々市市の産後ケア・母乳育児相談</title>
+  <meta name="description" content="石川県野々市市の助産院。産後ケア・母乳育児相談・産後トラブル・フットセラピー・子育て支援まで、妊婦さんから産後のママと赤ちゃんを、助産師が丁寧にサポートします。">
+  <!-- keywords は Google の順位判定には使われません(2009年に公式に廃止)。
+       一部の検索エンジンや社内ツール向けに残しているだけで、効くのは title/description/見出し/本文/構造化データです -->
+  <meta name="keywords" content="助産院,石川県,野々市市,産後ケア,母乳育児相談,産後トラブル,子育て支援,フットセラピー,妊婦">
   <link rel="canonical" href="https://arima-josanin.com/">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
   <meta name="theme-color" content="#AF496E">
@@ -15,8 +18,8 @@
   <meta property="og:site_name" content="ありま助産院">
   <meta property="og:locale" content="ja_JP">
   <meta property="og:url" content="https://arima-josanin.com/">
-  <meta property="og:title" content="ありま助産院 | 石川県野々市市の産後ケア・母乳外来">
-  <meta property="og:description" content="石川県野々市市の助産院。産後ケア(デイサービス・訪問)、母乳外来、育児相談、フットセラピーなど、産後のママと赤ちゃんを丁寧にサポートします。">
+  <meta property="og:title" content="ありま助産院 | 石川県野々市市の産後ケア・母乳育児相談">
+  <meta property="og:description" content="石川県野々市市の助産院。産後ケア・母乳育児相談・産後トラブル・フットセラピー・子育て支援まで、妊婦さんから産後のママと赤ちゃんを、助産師が丁寧にサポートします。">
   <meta property="og:image" content="https://arima-josanin.com/images/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -607,6 +610,16 @@
       font-size: 14.5px;
     }
 
+    /* セクション末尾の補足(画像がAI生成であることの注記など) */
+    .sec-note {
+      margin-top: 32px;
+      font-size: 12px;
+      line-height: 2;
+      letter-spacing: .06em;
+      color: var(--ink-soft);
+      text-align: center;
+    }
+
     .svc-note {
       margin-top: 20px;
       background: var(--pink-note);
@@ -716,27 +729,137 @@
       }
     }
 
-    /* ---------- WEB予約 ---------- */
-    .booking {
+    /* ---------- お知らせ ---------- */
+    /* 中身が0件のときは JS がセクションごと隠す(display指定に負けないよう !important) */
+    [hidden] {
+      display: none !important;
+    }
+
+    .news {
       background: var(--bg-section);
     }
 
-    .booking-card {
-      margin-top: 48px;
+    .news-list {
+      margin-top: 44px;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .news-item {
+      background: #fff;
+      border-radius: 20px;
+      padding: 22px 24px;
+      box-shadow: 0 10px 28px rgba(175, 73, 110, .07);
+    }
+
+    .news-date {
+      font-size: 12px;
+      letter-spacing: .14em;
+      color: var(--pink-label);
+    }
+
+    .news-title {
+      margin-top: 8px;
+      font-size: 15.5px;
+      line-height: 1.8;
+      letter-spacing: .08em;
+      color: var(--ink);
+    }
+
+    .news-body {
+      margin-top: 10px;
+      font-size: 13.5px;
+      line-height: 2;
+      letter-spacing: .06em;
+      color: var(--ink-body);
+      white-space: pre-wrap;
+    }
+
+    @media (min-width:820px) {
+      .news .container {
+        max-width: 760px;
+      }
+
+      .news-item {
+        padding: 26px 30px;
+      }
+    }
+
+    /* ---------- 空き状況カレンダー ---------- */
+    .schedule {
+      background: var(--bg-section);
+    }
+
+    /* スマホ用の表示切り替え(月表示 / リスト)。PCでは出さない */
+    .cal-modes {
+      margin-top: 40px;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .cal-mode {
+      font: inherit;
+      font-size: 12.5px;
+      letter-spacing: .1em;
+      color: var(--rose-btn);
+      background: #fff;
+      border: 1px solid #EFD3DE;
+      border-radius: 999px;
+      padding: 9px 20px;
+      cursor: pointer;
+      transition: background .25s, border-color .25s, color .25s;
+    }
+
+    .cal-mode[aria-pressed="true"] {
+      background: var(--rose-btn);
+      border-color: var(--rose-btn);
+      color: #fff;
+    }
+
+    .cal-hint {
+      margin-top: 12px;
+      font-size: 12px;
+      letter-spacing: .06em;
+      color: var(--ink-soft);
+      text-align: center;
+    }
+
+    .cal-card {
+      margin-top: 16px;
       background: #fff;
       border-radius: 26px;
       box-shadow: 0 12px 34px rgba(175, 73, 110, .09);
       overflow: hidden;
     }
 
-    .booking-card iframe {
+    .cal-card iframe {
       display: block;
       width: 100%;
-      height: 660px;
+      height: 520px;
       border: 0;
     }
 
-    .booking-empty {
+    /* スマホの月表示は、幅を詰めると日付が潰れて読めない。
+       カレンダーに最低幅を持たせ、カード内を横スクロールさせて全体を見せる */
+    .cal-card.is-scroll-x {
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .cal-card.is-scroll-x iframe {
+      /* 幅はカードいっぱいに広げつつ、360pxを下限にする。
+         下限がないと日付やイベント名が潰れて読めなくなるため、
+         入りきらないぶんは横スクロールで見てもらう */
+      width: 100%;
+      min-width: 360px;
+      height: 560px;
+    }
+
+    .cal-empty {
       padding: 70px 28px;
       display: flex;
       flex-direction: column;
@@ -745,25 +868,25 @@
       text-align: center;
     }
 
-    .booking-empty .b-icon {
+    .cal-empty .b-icon {
       width: 38px;
       height: 38px;
       fill: var(--pink-label);
     }
 
-    .booking-empty .b-title {
+    .cal-empty .b-title {
       font-size: 15px;
       letter-spacing: .1em;
       color: #B0517A;
     }
 
-    .booking-empty .b-sub {
+    .cal-empty .b-sub {
       font-size: 12.5px;
       line-height: 2.1;
       color: var(--ink-soft);
     }
 
-    .booking-alt {
+    .cal-alt {
       margin-top: 28px;
       font-size: 13.5px;
       line-height: 2;
@@ -772,15 +895,23 @@
       text-align: center;
     }
 
-    .booking-alt a {
+    .cal-alt a {
       color: #B0517A;
       text-decoration: underline;
       text-underline-offset: 4px;
     }
 
     @media (min-width:820px) {
-      .booking .container {
+      .schedule .container {
         max-width: 820px;
+      }
+
+      .cal-card {
+        margin-top: 48px;
+      }
+
+      .cal-card iframe {
+        height: 640px;
       }
     }
 
@@ -964,11 +1095,23 @@
     "@context": "https://schema.org",
     "@type": "MedicalClinic",
     "name": "ありま助産院",
-    "description": "石川県野々市市の助産院。産後ケア(デイサービス・訪問)、母乳外来、育児相談、フットセラピーなど、産後のママと赤ちゃんを丁寧にサポートします。",
+    "description": "石川県野々市市の助産院。産後ケア・母乳育児相談・産後トラブル・フットセラピー・子育て支援まで、妊婦さんから産後のママと赤ちゃんを、助産師が丁寧にサポートします。",
     "url": "https://arima-josanin.com/",
     "image": "https://arima-josanin.com/images/og-image.jpg",
     "logo": "https://arima-josanin.com/images/logo.jpg",
     "medicalSpecialty": "Midwifery",
+    "knowsAbout": [
+      "産後ケア",
+      "母乳育児相談",
+      "産後トラブル",
+      "子育て支援",
+      "フットセラピー",
+      "妊婦のご相談"
+    ],
+    "areaServed": {
+      "@type": "AdministrativeArea",
+      "name": "石川県野々市市"
+    },
     "address": {
       "@type": "PostalAddress",
       "postalCode": "921-8031",
@@ -990,7 +1133,11 @@
       { "@type": "MedicalTherapy", "name": "産後ケア 訪問" },
       { "@type": "MedicalTherapy", "name": "母乳外来" },
       { "@type": "MedicalTherapy", "name": "育児相談" },
-      { "@type": "MedicalTherapy", "name": "フットセラピー" }
+      { "@type": "MedicalTherapy", "name": "フットセラピー" },
+      { "@type": "MedicalTherapy", "name": "母乳育児相談" },
+      { "@type": "MedicalTherapy", "name": "産後トラブルのご相談" },
+      { "@type": "MedicalTherapy", "name": "子育て支援" },
+      { "@type": "MedicalTherapy", "name": "妊婦のご相談" }
     ],
     "sameAs": [
       "https://www.instagram.com/arima_jyo3in",
@@ -1038,6 +1185,16 @@
       </div>
     </section>
 
+    <!-- お知らせ -->
+    <!-- 表示する内容は news.json で管理します。0件のときはセクションごと非表示 -->
+    <section id="news" class="section news" hidden>
+      <div class="container">
+        <p class="sec-label reveal">News</p>
+        <h2 class="sec-title reveal">お知らせ</h2>
+        <ul class="news-list" id="newsList"></ul>
+      </div>
+    </section>
+
     <!-- 助産院について -->
     <section id="about" class="section about">
       <div class="container">
@@ -1056,7 +1213,7 @@
         <p class="sec-label reveal">About Us</p>
         <h2 class="sec-title reveal">産後のママに<br>寄り添う場所</h2>
         <p class="body-text reveal">
-          ありま助産院は、産後ケアを中心とした助産院です。出産後の体の回復、母乳育児、赤ちゃんのお世話──さまざまな不安や悩みに、経験豊富な助産師が丁寧に向き合います。「こんなこと聞いていいのかな」と思うことでも、どうぞお気軽に。
+          ありま助産院は、石川県野々市市にある産後ケア中心の助産院です。出産後の体の回復や産後トラブル、母乳育児のお悩み、赤ちゃんのお世話──妊娠中の妊婦さんから産後のママまで、経験豊富な助産師が丁寧に向き合います。「こんなこと聞いていいのかな」と思うことでも、どうぞお気軽に。
         </p>
 
         <div class="features" data-stagger=".12">
@@ -1073,7 +1230,7 @@
           <div class="feature-card reveal">
             <img class="f-icon" src="images/icon-nursing.webp" alt="" width="256" height="256" loading="lazy"
               decoding="async">
-            <span class="f-text">母乳育児をサポート</span>
+            <span class="f-text">母乳育児相談</span>
           </div>
           <div class="feature-card reveal">
             <img class="f-icon f-icon--wide" src="images/icon-athome.webp" alt="" width="256" height="256"
@@ -1128,7 +1285,7 @@
             <div class="svc-body">
               <p class="svc-number">03</p>
               <h3>母乳外来</h3>
-              <p>「うまく飲んでくれない」「乳腺炎が心配」など、母乳育児のあらゆるお悩みに対応します。授乳が楽しくなるようサポートします。</p>
+              <p>「うまく飲んでくれない」「乳腺炎が心配」など、母乳育児相談として授乳のお悩み全般に対応します。乳腺炎などの産後トラブルもご相談ください。</p>
             </div>
           </article>
 
@@ -1140,7 +1297,7 @@
             <div class="svc-body">
               <p class="svc-number">04</p>
               <h3>育児相談</h3>
-              <p>「こんなこと聞いていいのかな」と思うことでも気軽にどうぞ。赤ちゃんのこと、ママ自身のこと、なんでもお話しください。</p>
+              <p>「こんなこと聞いていいのかな」と思うことでも気軽にどうぞ。赤ちゃんのこと、ママ自身のこと、子育て支援に関することまで、なんでもお話しください。</p>
             </div>
           </article>
 
@@ -1152,7 +1309,7 @@
             <div class="svc-body">
               <p class="svc-number">05</p>
               <h3>フットセラピー・ボディケア</h3>
-              <p>足元から全身のリラックスを促すフットセラピー。産後のがんばる体を、ゆっくり癒す時間をお届けします。</p>
+              <p>足元から全身のリラックスを促すフットセラピー。むくみや肩こりなどの産後トラブルでお疲れの体を、ゆっくり癒す時間をお届けします。</p>
             </div>
           </article>
 
@@ -1169,6 +1326,8 @@
           </article>
 
         </div>
+
+        <p class="sec-note reveal">※掲載している写真はイメージです。AIで生成した画像を使用しています。</p>
       </div>
     </section>
 
@@ -1202,9 +1361,9 @@
             <dd>日曜・祝日</dd>
           </div>
           <div class="access-row">
-            <dt>予約可能日</dt>
-            <!-- WEB予約セクション(Googleカレンダー埋め込み)へ誘導 -->
-            <dd><a class="pill" href="#booking"><svg class="pill-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19,4h-1V2h-2v2H8V2H6v2H5C3.89,4,3.01,4.9,3.01,6L3,20c0,1.1,0.89,2,2,2h14c1.1,0,2-0.9,2-2V6C21,4.9,20.1,4,19,4z M19,20 H5V10h14V20z M9,14H7v-2h2V14z M13,14h-2v-2h2V14z M17,14h-2v-2h2V14z M9,18H7v-2h2V18z M13,18h-2v-2h2V18z M17,18h-2v-2h2V18z"/></svg>Googleカレンダーで確認</a></dd>
+            <dt>空き状況</dt>
+            <!-- 空き状況セクション(Googleカレンダー埋め込み)へ誘導 -->
+            <dd><a class="pill" href="#schedule"><svg class="pill-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19,4h-1V2h-2v2H8V2H6v2H5C3.89,4,3.01,4.9,3.01,6L3,20c0,1.1,0.89,2,2,2h14c1.1,0,2-0.9,2-2V6C21,4.9,20.1,4,19,4z M19,20 H5V10h14V20z M9,14H7v-2h2V14z M13,14h-2v-2h2V14z M17,14h-2v-2h2V14z M9,18H7v-2h2V18z M13,18h-2v-2h2V18z M17,18h-2v-2h2V18z"/></svg>カレンダーで空きを見る</a></dd>
           </div>
         </dl>
 
@@ -1222,25 +1381,31 @@
       </div>
     </section>
 
-    <!-- WEB予約(Googleカレンダー 予約スケジュール埋め込み) -->
-    <section id="booking" class="section booking">
+    <!-- 空き状況(Googleカレンダー埋め込み) -->
+    <section id="schedule" class="section schedule">
       <div class="container">
-        <p class="sec-label reveal">Reservation</p>
-        <h2 class="sec-title reveal">WEB予約</h2>
-        <p class="sec-sub reveal">空き状況を確認しながら、24時間いつでもご予約いただけます。</p>
+        <p class="sec-label reveal">Availability</p>
+        <h2 class="sec-title reveal">空き状況</h2>
+        <p class="sec-sub reveal">空きのある日と、クラス・イベントの日程を<br>カレンダーでご確認いただけます。</p>
 
-        <!-- 予約カレンダーは下部scriptの BOOKING_URL を設定すると表示されます -->
-        <div class="booking-card reveal reveal-zoom" id="bookingCard">
-          <div class="booking-empty">
+        <!-- スマホは月表示だと日付が潰れるため、リストと切り替えられるようにする(PCでは非表示) -->
+        <div class="cal-modes reveal" id="calModes" hidden>
+          <button type="button" class="cal-mode" data-mode="AGENDA">リスト</button>
+          <button type="button" class="cal-mode" data-mode="MONTH">月表示</button>
+        </div>
+
+        <!-- カレンダーは下部scriptの SCHEDULE_CAL_ID を設定すると表示されます -->
+        <div class="cal-card reveal reveal-zoom" id="scheduleCard">
+          <div class="cal-empty">
             <svg class="b-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19,4h-1V2h-2v2H8V2H6v2H5C3.89,4,3.01,4.9,3.01,6L3,20c0,1.1,0.89,2,2,2h14c1.1,0,2-0.9,2-2V6C21,4.9,20.1,4,19,4z M19,20 H5V10h14V20z M9,14H7v-2h2V14z M13,14h-2v-2h2V14z M17,14h-2v-2h2V14z M9,18H7v-2h2V18z M13,18h-2v-2h2V18z M17,18h-2v-2h2V18z"/></svg>
-            <span class="b-title">予約カレンダーをここに表示できます</span>
-            <span class="b-sub">Googleカレンダーの「予約スケジュール」の埋め込みURLを<br>ページ下部の BOOKING_URL に貼り付けると有効になります。</span>
+            <span class="b-title">空き状況カレンダーをここに表示できます</span>
+            <span class="b-sub">GoogleカレンダーのカレンダーIDを<br>ページ下部の SCHEDULE_CAL_ID に貼り付けると有効になります。</span>
           </div>
         </div>
 
-        <p class="booking-alt reveal"><a href="reservation.html">予約ページ</a>
-          では、LINEで送れる予約フォームもご利用いただけます。<br>WEB予約がうまくいかない場合は <a href="https://line.me/R/ti/p/@813zbbgz" target="_blank"
-            rel="noopener">LINE</a> または <a href="#contact">お電話</a> でもご予約いただけます。</p>
+        <p class="cal-hint" id="calHint" hidden>← 横にスクロールすると月全体を見られます →</p>
+
+        <p class="cal-alt reveal">ご予約は <a href="reservation.html">予約ページ</a> のLINEフォーム、<br><a href="https://line.me/R/ti/p/@813zbbgz" target="_blank" rel="noopener">LINE</a> または <a href="#contact">お電話</a> から承ります。</p>
       </div>
     </section>
 
@@ -1324,25 +1489,71 @@
       });
     }
 
-    // ===== WEB予約(Googleカレンダー 予約スケジュール) =====
+    // ===== 空き状況カレンダー(Googleカレンダーの埋め込み) =====
     // 設定手順:
-    //   1. Googleカレンダー(PC) → 「作成」→「予約スケジュール」で予約ページを作成
-    //   2. 予約ページにカーソル → 「⋮」→「共有オプション」→「ウェブサイトに埋め込む」
-    //   3. 「インラインの予約ページ」を選び、コード内の src="..." のURLをコピー
-    //   4. 下の BOOKING_URL に貼り付け
-    const BOOKING_URL = "https://calendar.google.com/calendar/appointments/schedules/AcZssZ2dpVbyibeIp_ZsWt4QKLvoAva6at4AbrxzOs_O63t3C5PTcObJknMD9_VYD7kZWyhmgKaCj2QP?gv=true";
+    //   1. Googleカレンダー(PC) → 対象カレンダーの「⋮」→「設定と共有」
+    //   2. 「アクセス権限」→「一般公開して誰でも利用できるようにする」にチェック
+    //      ※公開にしないと、サイトを見た方には「権限がありません」と表示されます
+    //   3. 同じ画面の「カレンダーの統合」にある「カレンダーID」をコピー
+    //   4. 下の SCHEDULE_CAL_ID に貼り付け
+    const SCHEDULE_CAL_ID = "";  // 例: "arima.josanin@gmail.com"
 
-    if (BOOKING_URL) {
-      const card = document.getElementById('bookingCard');
-      const url = BOOKING_URL.includes('gv=true')
-        ? BOOKING_URL
-        : BOOKING_URL + (BOOKING_URL.includes('?') ? '&' : '?') + 'gv=true';
+    if (SCHEDULE_CAL_ID) {
+      const card  = document.getElementById('scheduleCard');
+      const modes = document.getElementById('calModes');
+      const hint  = document.getElementById('calHint');
+
+      const frame = document.createElement('iframe');
+      frame.title = 'ありま助産院の空き状況';
+      frame.loading = 'lazy';
       card.innerHTML = '';
-      const f = document.createElement('iframe');
-      f.src = url;
-      f.title = 'ご予約カレンダー';
-      f.loading = 'lazy';
-      card.appendChild(f);
+      card.appendChild(frame);
+
+      const narrow = window.matchMedia('(max-width:819px)');
+      // スマホの初期表示はリスト。月表示も見たい人はボタンで切り替えられる
+      let mode = narrow.matches ? 'AGENDA' : 'MONTH';
+
+      const render = () => {
+        const q = new URLSearchParams({
+          src: SCHEDULE_CAL_ID,
+          ctz: 'Asia/Tokyo',
+          hl: 'ja',
+          wkst: '1',                                  // 週の始まりを日曜に
+          mode: mode,
+          bgcolor: '#ffffff',
+          showTitle: '0', showPrint: '0', showTabs: '0',
+          showCalendars: '0', showTz: '0',
+          showNav: '1', showDate: '1',
+        });
+        const url = 'https://calendar.google.com/calendar/embed?' + q;
+        // 同じURLを入れ直すと無駄に再読み込みされるので、変わったときだけ差し替える
+        if (frame.src !== url) frame.src = url;
+
+        // スマホの月表示のときだけ、潰さずに見せるため横スクロールにする
+        const scrollX = narrow.matches && mode === 'MONTH';
+        card.classList.toggle('is-scroll-x', scrollX);
+        // 幅に収まっている端末ではスクロールできないので、はみ出すときだけ案内を出す
+        hint.hidden = !(scrollX && card.scrollWidth > card.clientWidth + 4);
+        modes.hidden = !narrow.matches;
+        modes.querySelectorAll('.cal-mode').forEach((b) => {
+          b.setAttribute('aria-pressed', String(b.dataset.mode === mode));
+        });
+      };
+
+      modes.addEventListener('click', (e) => {
+        const btn = e.target.closest('.cal-mode');
+        if (!btn || btn.dataset.mode === mode) return;
+        mode = btn.dataset.mode;
+        render();
+      });
+
+      // 画面幅が変わったら、その幅での既定の表示に戻す
+      narrow.addEventListener('change', () => {
+        mode = narrow.matches ? 'AGENDA' : 'MONTH';
+        render();
+      });
+
+      render();
     }
 
     // data-stagger を持つ親の直下の子に、時間差(--d)を自動で割り当て
@@ -1365,6 +1576,58 @@
       });
     }, { threshold: .15, rootMargin: '0px 0px -8% 0px' });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // ===== お知らせ =====
+    // 更新するときは news.json だけを編集してください(このファイルは触らなくて大丈夫です)
+    // 1件も無いときはセクションごと表示されません
+    fetch('news.json', { cache: 'no-cache' })
+      .then(r => r.ok ? r.json() : [])
+      .then(items => {
+        if (!Array.isArray(items) || items.length === 0) return;
+
+        const list = document.getElementById('newsList');
+        // 日付の新しい順に並べ、多すぎると長くなるので5件までにする
+        items
+          .slice()
+          .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')))
+          .slice(0, 5)
+          .forEach((item, i) => {
+            const li = document.createElement('li');
+            li.className = 'news-item reveal';
+            li.style.setProperty('--d', (i * .1).toFixed(2) + 's');
+
+            if (item.date) {
+              const d = document.createElement('p');
+              d.className = 'news-date';
+              // 「2026-08-21」→「2026.08.21」。書式が違うときはそのまま出す
+              d.textContent = /^\d{4}-\d{2}-\d{2}$/.test(item.date)
+                ? item.date.replace(/-/g, '.')
+                : item.date;
+              li.appendChild(d);
+            }
+
+            const t = document.createElement('p');
+            t.className = 'news-title';
+            t.textContent = item.title || '';
+            li.appendChild(t);
+
+            if (item.body) {
+              const b = document.createElement('p');
+              b.className = 'news-body';
+              b.textContent = item.body;
+              li.appendChild(b);
+            }
+
+            list.appendChild(li);
+            // 後から足した要素は最初の監視に入っていないので、個別に登録する
+            io.observe(li);
+          });
+
+        document.getElementById('news').hidden = false;
+      })
+      // 読み込めない・書式が壊れているときは、お知らせが出ないだけでページは通常どおり。
+      // 原因はブラウザの開発者ツールのコンソールで確認できます
+      .catch((e) => console.warn('news.json を読み込めませんでした:', e));
   </script>
 
 </body>
