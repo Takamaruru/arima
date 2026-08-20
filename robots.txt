@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
 
+# 作業用ドキュメントは検索結果に出さない
+Disallow: /*.md$
+
 Sitemap: https://arima-josanin.com/sitemap.xml

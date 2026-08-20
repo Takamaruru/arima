@@ -467,6 +467,9 @@
       height: 100%;
       object-fit: cover;
       display: block;
+      /* 縦長の画像を入れたときに顔の上が切れないよう、上寄りで切り取る。
+         カードと同じ4:3の画像なら切り取りが起きないので影響しない */
+      object-position: center 20%;
     }
 
     .svc-body {
@@ -561,35 +564,32 @@
       transform: translateY(-1px);
     }
 
-    .map-ph {
+    /* Googleマップ。iframeは高さを親で決めるので固定値を持たせる */
+    .map-embed {
       margin-top: 52px;
       border-radius: 26px;
+      overflow: hidden;
+      height: 340px;
+      /* 地図が読み込まれるまでの下地 */
       background: linear-gradient(160deg, #F7D6E1 0%, #F2C9D8 100%);
-      min-height: 340px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
+    }
+
+    .map-embed iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
+    .map-actions {
+      margin-top: 20px;
       text-align: center;
-      padding: 40px 24px;
     }
 
-    .map-ph .m-emoji {
-      font-size: 34px;
-      line-height: 1;
-    }
-
-    .map-ph .m-addr {
-      font-size: 15px;
-      letter-spacing: .12em;
-      color: #B0517A;
-    }
-
-    .map-ph .m-sub {
-      font-size: 12.5px;
-      letter-spacing: .08em;
-      color: #9C8A91;
+    @media (min-width:820px) {
+      .map-embed {
+        height: 420px;
+      }
     }
 
     @media (min-width:820px) {
@@ -1090,11 +1090,18 @@
         </dl>
 
         <!-- Googleマップの埋め込みに差し替え可 -->
-        <div class="map-ph reveal reveal-zoom">
-          <span class="m-emoji">🗺️</span>
-          <span class="m-addr">野々市市太平寺3-183-5</span>
-          <span class="m-sub">Google マップを埋め込み予定</span>
+        <div class="map-embed reveal reveal-zoom">
+          <iframe
+            title="ありま助産院の地図(石川県野々市市太平寺3-183-5)"
+            src="https://maps.google.com/maps?q=%E7%9F%B3%E5%B7%9D%E7%9C%8C%E9%87%8E%E3%80%85%E5%B8%82%E5%B8%82%E5%A4%AA%E5%B9%B3%E5%AF%BA3-183-5&amp;z=16&amp;hl=ja&amp;output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen></iframe>
         </div>
+        <p class="map-actions reveal">
+          <a class="pill" href="https://www.google.com/maps/dir/?api=1&amp;destination=%E7%9F%B3%E5%B7%9D%E7%9C%8C%E9%87%8E%E3%80%85%E5%B8%82%E5%B8%82%E5%A4%AA%E5%B9%B3%E5%AF%BA3-183-5"
+            target="_blank" rel="noopener"><span>🚗</span>ここへの経路を調べる</a>
+        </p>
       </div>
     </section>
 
