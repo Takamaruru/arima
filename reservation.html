@@ -185,6 +185,17 @@ a{ color:inherit; text-decoration:none; }
 }
 .sec-sub{ font-size:14.5px; color:var(--ink-body); }
 
+/* パソコンのときだけ出す案内 */
+.pc-notice{
+  margin-top:22px;
+  background:var(--pink-note);
+  color:#B0517A;
+  border-radius:14px;
+  padding:15px 18px;
+  font-size:13px; line-height:1.9; letter-spacing:.05em;
+}
+.pc-notice[hidden]{ display:none; }
+
 .btn{
   display:inline-block; border-radius:999px;
   padding:15px 34px;
@@ -681,6 +692,11 @@ a:focus-visible,.btn:focus-visible,.pill:focus-visible{
       <h2 class="sec-title reveal">LINE予約フォーム</h2>
       <p class="sec-sub reveal">ご希望の内容を入力すると、予約メッセージが自動で作成されます。<br>「LINEで送信」を押すと、LINEのトーク画面が開きます。</p>
 
+      <!-- パソコンからは送信にひと手順必要なため、入力を始める前に伝えておく -->
+      <p class="pc-notice" id="formPcNotice" hidden>
+        パソコンからはLINEへ直接送信できません。入力後に表示されるQRコードをスマートフォンで読み取るか、パソコン版のLINEアプリに貼り付けて送信していただきます。
+      </p>
+
       <form class="form-card reveal reveal-zoom" id="resForm" novalidate>
 
         <div class="form-group">
@@ -1109,6 +1125,14 @@ if(!isMobileDevice()){
   if(label && label.nodeType === Node.TEXT_NODE) label.textContent = ' コピーして送信方法を見る';
   document.querySelector('.form-note').textContent =
     'パソコンからはLINEに内容を引き継げません。ボタンを押すと予約内容をコピーし、送信方法をご案内します。予約はメッセージ送信後、返信をもって確定となります。';
+
+  // 見出し下の案内を出す
+  const formPcNotice = document.getElementById('formPcNotice');
+  if(formPcNotice) formPcNotice.hidden = false;
+
+  // スマホ前提の説明文はPCでは実態と合わないので書き換える
+  const formSub = document.querySelector('#form .sec-sub');
+  if(formSub) formSub.textContent = 'ご希望の内容を入力すると、予約メッセージが自動で作成されます。';
 }
 
 form.addEventListener('submit', (e) => {
