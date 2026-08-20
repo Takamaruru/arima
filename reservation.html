@@ -438,7 +438,12 @@ select.field{
   font-size:12.5px; line-height:1.9; letter-spacing:.05em;
   color:var(--ink-soft); margin-bottom:14px;
 }
-.pc-guide-qr{ width:150px; height:150px; display:block; }
+.pc-guide-qr{
+  display:block;
+  width:100%; max-width:280px; height:auto;
+  /* 生成したQRはドット画像なので、拡大縮小でぼやけないようにする */
+  image-rendering:pixelated;
+}
 .pc-guide-note{
   margin-top:18px;
   font-size:12.5px; line-height:1.9; color:var(--ink-soft);
@@ -772,9 +777,11 @@ a:focus-visible,.btn:focus-visible,.pill:focus-visible{
             </div>
             <div class="pc-guide-col">
               <p class="pc-guide-h">スマートフォンで送る</p>
-              <p class="pc-guide-t">QRコードを読み取ってトークを開き、上の「送信されるメッセージ」を見ながら送信してください。</p>
-              <img class="pc-guide-qr" src="images/line-qr.svg"
-                alt="ありま助産院のLINE公式アカウントのQRコード" width="150" height="150" loading="lazy">
+              <p class="pc-guide-t" id="qrNote">QRコードを読み取ると、入力内容が入った状態でLINEのトーク画面が開きます。</p>
+              <div id="qrBox">
+                <img class="pc-guide-qr" src="images/line-qr.svg"
+                  alt="ありま助産院のLINE公式アカウントのQRコード" width="150" height="150" loading="lazy">
+              </div>
             </div>
           </div>
           <p class="pc-guide-note">うまくいかない場合は、お電話でも承っております。</p>
@@ -1045,6 +1052,49 @@ function copyText(text){
 }
 
 const pcGuide = document.getElementById('pcGuide');
+const qrBox = document.getElementById('qrBox');
+const qrNote = document.getElementById('qrNote');
+
+// QRライブラリはPCで送信を押したときだけ読み込む(スマホでは不要なので)
+let qrLibPromise = null;
+function loadQrLib(){
+  if(window.qrcode) return Promise.resolve(window.qrcode);
+  if(!qrLibPromise){
+    qrLibPromise = new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = 'js/qrcode.js';
+      s.onload = () => window.qrcode ? resolve(window.qrcode) : reject(new Error('qrcode undefined'));
+      s.onerror = () => reject(new Error('QRライブラリを読み込めませんでした'));
+      document.head.appendChild(s);
+    });
+  }
+  return qrLibPromise;
+}
+
+// 予約内容を含んだURLをQRにする。長すぎて収まらない場合は make() が例外を投げる
+function renderMessageQr(url){
+  return loadQrLib().then((qrcode) => {
+    const qr = qrcode(0, 'L');
+    qr.addData(url);
+    qr.make();
+    const img = document.createElement('img');
+    img.className = 'pc-guide-qr';
+    img.src = qr.createDataURL(3, 4);
+    img.alt = 'ご予約内容が入った状態でLINEのトークを開くQRコード';
+    qrBox.replaceChildren(img);
+    qrNote.textContent = 'QRコードを読み取ると、入力内容が入った状態でLINEのトーク画面が開きます。';
+  });
+}
+
+// 生成できないときは公式アカウントのQRに戻す
+function fallbackQr(){
+  const img = document.createElement('img');
+  img.className = 'pc-guide-qr';
+  img.src = 'images/line-qr.svg';
+  img.alt = 'ありま助産院のLINE公式アカウントのQRコード';
+  qrBox.replaceChildren(img);
+  qrNote.textContent = 'ご相談内容が長いため、QRコードに内容を含められませんでした。読み取ってトークを開き、内容をご入力ください。パソコンのLINEをお使いの場合は、コピー済みの内容を貼り付けられます。';
+}
 
 // PCでは押す前から動きが分かるようにボタンの文言を変えておく
 if(!isMobileDevice()){
@@ -1071,6 +1121,10 @@ form.addEventListener('submit', (e) => {
   // コピーの成否を待たずに先に表示する(クリップボードが使えない環境でも案内は出す)
   pcGuide.hidden = false;
   pcGuide.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+  // スマホで続けられるよう、予約内容を含んだQRを生成する
+  const lineUrl = 'https://line.me/R/oaMessage/' + encodeURIComponent(LINE_ID) + '/?' + encodeURIComponent(msg);
+  renderMessageQr(lineUrl).catch(fallbackQr);
 
   copyText(msg).then((copied) => {
     pcGuide.querySelector('.pc-guide-title').textContent =

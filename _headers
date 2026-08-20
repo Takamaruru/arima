@@ -17,6 +17,9 @@
 /favicon-32.png
   Cache-Control: public, max-age=604800
 
+/js/*
+  Cache-Control: public, max-age=604800
+
 # HTML は更新をすぐ反映させたいので毎回確認させる
 /*.html
   Cache-Control: public, max-age=0, must-revalidate
