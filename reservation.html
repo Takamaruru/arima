@@ -395,13 +395,24 @@ select.field{
   color:var(--ink-body);
   transition:background .25s, border-color .25s, color .25s;
 }
-.chip-face .c-emoji{ font-size:19px; flex:none; }
+.chip-face .c-ico{
+  display:block; width:22px; height:22px; flex:none;
+  color:var(--rose-btn);
+  transition:color .25s;
+}
+.chip-face .c-ico svg{
+  display:block; width:100%; height:100%;
+  fill:none; stroke:currentColor; stroke-width:1.6;
+  stroke-linecap:round; stroke-linejoin:round;
+}
+.chip-face .c-ico svg .dot{ fill:currentColor; stroke:none; }
 .chip:hover .chip-face{ border-color:var(--rose-btn); }
 .chip input:checked + .chip-face{
   background:var(--rose-btn);
   border-color:var(--rose-btn);
   color:#fff;
 }
+.chip input:checked + .chip-face .c-ico{ color:#fff; }
 .chip input:focus-visible + .chip-face{
   outline:2px solid var(--rose); outline-offset:3px;
 }
@@ -702,12 +713,12 @@ a:focus-visible,.btn:focus-visible,.pill:focus-visible{
         <div class="form-group">
           <p class="form-label" id="svcLabel">ご希望メニュー <span class="tag tag-req">必須</span></p>
           <div class="svc-choices" role="radiogroup" aria-labelledby="svcLabel">
-            <label class="chip"><input type="radio" name="svc" value="産後ケア デイサービス"><span class="chip-face"><span class="c-emoji">🌸</span>産後ケア デイサービス</span></label>
-            <label class="chip"><input type="radio" name="svc" value="産後ケア 訪問"><span class="chip-face"><span class="c-emoji">👩‍⚕️</span>産後ケア 訪問</span></label>
-            <label class="chip"><input type="radio" name="svc" value="母乳外来"><span class="chip-face"><span class="c-emoji">🤱</span>母乳外来</span></label>
-            <label class="chip"><input type="radio" name="svc" value="育児相談"><span class="chip-face"><span class="c-emoji">👶</span>育児相談</span></label>
-            <label class="chip"><input type="radio" name="svc" value="フットセラピー・ボディケア"><span class="chip-face"><span class="c-emoji">💆‍♀️</span>フットセラピー・ボディケア</span></label>
-            <label class="chip"><input type="radio" name="svc" value="クラス・イベント / その他"><span class="chip-face"><span class="c-emoji">🎉</span>クラス・イベント / その他</span></label>
+            <label class="chip"><input type="radio" name="svc" value="産後ケア デイサービス"><span class="chip-face"><span class="c-ico"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4.6 9.4h10.8v4.4a4.4 4.4 0 0 1-4.4 4.4h-2a4.4 4.4 0 0 1-4.4-4.4z"/><path d="M15.4 11h1.9a2.5 2.5 0 0 1 0 5h-1.9"/><path d="M3.6 20.6h13"/><path d="M8.3 6.6V4.6M11.8 6.6V4.6"/></svg></span>産後ケア デイサービス</span></label>
+            <label class="chip"><input type="radio" name="svc" value="産後ケア 訪問"><span class="chip-face"><span class="c-ico"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3.6 10.6 12 4l8.4 6.6"/><path d="M5.9 9.5V19a1.4 1.4 0 0 0 1.4 1.4h9.4A1.4 1.4 0 0 0 18.1 19V9.5"/><path d="M9.8 20.4v-5.2h4.4v5.2"/></svg></span>産後ケア 訪問</span></label>
+            <label class="chip"><input type="radio" name="svc" value="母乳外来"><span class="chip-face"><span class="c-ico"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3.2s6.2 6.6 6.2 10.6a6.2 6.2 0 0 1-12.4 0C5.8 9.8 12 3.2 12 3.2z"/><path d="M9.2 14.4a2.8 2.8 0 0 0 2.8 2.8"/></svg></span>母乳外来</span></label>
+            <label class="chip"><input type="radio" name="svc" value="育児相談"><span class="chip-face"><span class="c-ico"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 5.5h16A1.6 1.6 0 0 1 21.6 7.1v7.8A1.6 1.6 0 0 1 20 16.5h-8.4l-4.3 3.4v-3.4H4a1.6 1.6 0 0 1-1.6-1.6V7.1A1.6 1.6 0 0 1 4 5.5z"/><circle class="dot" cx="8.4" cy="11" r=".95"/><circle class="dot" cx="12" cy="11" r=".95"/><circle class="dot" cx="15.6" cy="11" r=".95"/></svg></span>育児相談</span></label>
+            <label class="chip"><input type="radio" name="svc" value="フットセラピー・ボディケア"><span class="chip-face"><span class="c-ico"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><ellipse cx="12" cy="8.3" rx="2.4" ry="3.8"/><ellipse cx="12" cy="8.3" rx="2.4" ry="3.8" transform="rotate(72 12 13.6)"/><ellipse cx="12" cy="8.3" rx="2.4" ry="3.8" transform="rotate(144 12 13.6)"/><ellipse cx="12" cy="8.3" rx="2.4" ry="3.8" transform="rotate(216 12 13.6)"/><ellipse cx="12" cy="8.3" rx="2.4" ry="3.8" transform="rotate(288 12 13.6)"/><circle cx="12" cy="13.6" r="1.5"/></svg></span>フットセラピー・ボディケア</span></label>
+            <label class="chip"><input type="radio" name="svc" value="クラス・イベント / その他"><span class="chip-face"><span class="c-ico"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="6.6" r="2.7"/><path d="M7.8 16.6v-1a4.2 4.2 0 0 1 8.4 0v1"/><circle cx="4.4" cy="12.4" r="2.1"/><path d="M1.4 21v-.8a3 3 0 0 1 6 0v.8"/><circle cx="19.6" cy="12.4" r="2.1"/><path d="M16.6 21v-.8a3 3 0 0 1 6 0v.8"/></svg></span>クラス・イベント / その他</span></label>
           </div>
           <p class="field-error" id="errSvc">メニューをお選びください。</p>
           <p class="field-hint">※産後ケア(デイサービス・訪問)のご利用には、お住まいの福祉保健センターへの申請が必要です。</p>
