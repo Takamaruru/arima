@@ -420,22 +420,12 @@
       padding: 26px 20px;
     }
 
-    /* 絵文字と画像アイコンが混在しても4枚の高さが揃うよう箱を固定 */
-    .feature-card .f-emoji,
     .feature-card .f-icon {
       display: block;
-      height: 40px;
-      margin-bottom: 12px;
-    }
-
-    .feature-card .f-emoji {
-      font-size: 30px;
-      line-height: 40px;
-    }
-
-    .feature-card .f-icon {
       width: 40px;
+      height: 40px;
       object-fit: contain;
+      margin-bottom: 12px;
     }
 
     .feature-card .f-text {
@@ -947,7 +937,7 @@
 
         <div class="features" data-stagger=".12">
           <div class="feature-card reveal">
-            <span class="f-emoji">🌸</span>
+            <img class="f-icon" src="images/icon-postpartum.webp" alt="" width="256" height="256" loading="lazy" decoding="async">
             <span class="f-text">産後ケア専門</span>
           </div>
           <div class="feature-card reveal">
