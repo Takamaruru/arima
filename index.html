@@ -428,6 +428,12 @@
       margin-bottom: 12px;
     }
 
+    /* 2匹＋ハートで横長のため、同じ枠幅だと絵が小さく見える。
+       高さは40pxのままにして文字の位置を他の3枚と揃える */
+    .feature-card .f-icon--wide {
+      width: 48px;
+    }
+
     .feature-card .f-text {
       font-size: 14px;
       letter-spacing: .1em;
@@ -949,7 +955,7 @@
             <span class="f-text">母乳育児をサポート</span>
           </div>
           <div class="feature-card reveal">
-            <img class="f-icon" src="images/icon-athome.webp" alt="" width="256" height="256" loading="lazy" decoding="async">
+            <img class="f-icon f-icon--wide" src="images/icon-athome.webp" alt="" width="256" height="256" loading="lazy" decoding="async">
             <span class="f-text">アットホームな環境</span>
           </div>
         </div>
